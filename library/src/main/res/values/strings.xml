@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">Library</string>
+    <string name="emotion_view_get_config_error">表情配置读取错误</string>
+    <string name="emotion_view_no_history">暂无历史表情</string>
+</resources>

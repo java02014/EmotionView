@@ -1,0 +1,154 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<smileys>
+	<!-- 发送格式[sys:1002] sys代表分组 -->
+	<!-- id 表情包标识ID  name 分组名称  img 分组标题图片 type 表情类型(PIC|TEXT_PIC|EMOJI) order 排序 -->
+  <group id="cat" name="猫表情" normal_img="281_cutecat_renzhen" selected_img="281_cutecat_renzhen" type="PIC" ext="gif" order="4">
+  	<!-- id 唯一编号(当是下载表情包的时候，这个ID直接用内容服务图片ID) -->
+  	<!-- id 唯一编号(在表情包内唯一) filename="文件名" thumbnail="缩略图" shortcuts="快捷方式(预留)"  -->
+    <smiley id="281" filename="281_cutecat_renzhen" thumbnail="281_cutecat_renzhen" shortcuts="" 	>
+    	<!-- 提示信息 -->
+    	<tip>
+    		<def>认真</def>
+    		<cn>认真</cn>
+    		<tw>認真</tw>
+    		<en>earnest</en>
+      </tip>
+    </smiley>
+   <smiley id="282" filename="282_cutecat_xiai" thumbnail="282_cutecat_xiai" shortcuts="" 	>
+    	<!-- 提示信息 -->
+    	<tip>
+    		<def>喜爱</def>
+    		<cn>喜爱</cn> 
+    		<tw>喜愛</tw>
+    		<en>like</en>
+      </tip>
+    </smiley>
+    <smiley id="283" filename="283_cutecat_se" thumbnail="283_cutecat_se" shortcuts="" 	>
+    	<!-- 提示信息 -->
+    	<tip>
+    		<def>色</def>
+    		<cn>色</cn>
+    		<tw>色</tw>
+    		<en>lasciviousness</en>
+      </tip>
+    </smiley>
+    <smiley id="284" filename="284_cutecat_zhuak" thumbnail="284_cutecat_zhuak" shortcuts="" 	>
+    	<!-- 提示信息 -->
+    	<tip>
+    		<def>抓狂</def>
+    		<cn>抓狂</cn>
+    		<tw>抓狂</tw>
+    		<en>GoCrazy</en>
+      </tip>
+    </smiley>
+    <smiley id="285" filename="285_cutecat_yun" thumbnail="285_cutecat_yun" shortcuts="" 	>
+    	<!-- 提示信息 -->
+    	<tip>
+    		<def>晕</def>
+    		<cn>晕</cn>
+    		<tw>暈</tw>
+    		<en>faint</en>
+      </tip>
+    </smiley>
+    <smiley id="286" filename="286_cutecat_guilian" thumbnail="286_cutecat_guilian" shortcuts="" 	>
+    	<!-- 提示信息 -->
+    	<tip>
+    		<def>鬼脸</def>
+    		<cn>鬼脸</cn>
+    		<tw>鬼臉</tw>
+    		<en>grimace</en>
+      </tip>
+    </smiley>
+    <smiley id="287" filename="287_cutecat_image" thumbnail="287_cutecat_image" shortcuts="" 	>
+    	<!-- 提示信息 -->
+    	<tip>
+    		<def>幻想</def>
+    		<cn>幻想</cn>
+    		<tw>幻想</tw>
+    		<en>fantasy</en>
+      </tip>
+    </smiley>
+    <smiley id="288" filename="288_cutecat_jings" thumbnail="288_cutecat_jings" shortcuts="" 	>
+    	<!-- 提示信息 -->
+    	<tip>
+    		<def>惊悚</def>
+    		<cn>惊悚</cn>
+    		<tw>驚悚</tw>
+    		<en>terrified</en>
+      </tip>
+    </smiley>
+    <smiley id="289" filename="289_cutecat_koubi" thumbnail="289_cutecat_koubi" shortcuts="" 	>
+    	<!-- 提示信息 -->
+    	<tip>
+    		<def>抠鼻</def>
+    		<cn>抠鼻</cn>
+    		<tw>摳鼻</tw>
+    		<en>PullTheNose</en>
+      </tip>
+    </smiley>
+    <smiley id="290" filename="290_cutecat_ku" thumbnail="290_cutecat_ku" shortcuts="" 	>
+    	<!-- 提示信息 -->
+    	<tip>
+    		<def>流泪</def>
+    		<cn>流泪</cn>
+    		<tw>流淚</tw>
+    		<en>ShedTears</en>
+      </tip>
+    </smiley>
+    <smiley id="291" filename="291_cutecat_nuli" thumbnail="291_cutecat_nuli" shortcuts="" 	>
+    	<!-- 提示信息 -->
+    	<tip>
+    		<def>努力</def>
+    		<cn>努力</cn>
+    		<tw>努力</tw>
+    		<en>TryHard</en>
+      </tip>
+    </smiley>
+    <smiley id="292" filename="292_cutecat_jinghu" thumbnail="292_cutecat_jinghu" shortcuts="" 	>
+    	<!-- 提示信息 -->
+    	<tip>
+    		<def>惊呼</def>
+    		<cn>惊呼</cn>
+    		<tw>驚呼</tw>
+    		<en>Exclaimed</en>
+      </tip>
+    </smiley>
+    <smiley id="293" filename="293_cutecat_xiayitiao" thumbnail="293_cutecat_xiayitiao" shortcuts="" 	>
+    	<!-- 提示信息 -->
+    	<tip>
+    		<def>吓一跳</def>
+    		<cn>吓一跳</cn>
+    		<tw>嚇壹跳</tw>
+    		<en>startle</en>
+      </tip>
+    </smiley>
+    <smiley id="294" filename="294_cutecat_chifan" thumbnail="294_cutecat_chifan" shortcuts="" 	>
+    	<!-- 提示信息 -->
+    	<tip>
+    		<def>吃饭</def>
+    		<cn>吃饭</cn>
+    		<tw>吃飯</tw>
+    		<en>HaveAMeal</en>
+      </tip>
+    </smiley>
+    <smiley id="295" filename="295_cutecat_great" thumbnail="295_cutecat_great" shortcuts="" 	>
+    	<!-- 提示信息 -->
+    	<tip>
+    		<def>真棒</def>
+    		<cn>真棒</cn>
+    		<tw>真棒</tw>
+    		<en>wonderful</en>
+      </tip>
+    </smiley>
+    <smiley id="296" filename="296_cutecat_kele" thumbnail="296_cutecat_kele" shortcuts="" 	>
+    	<!-- 提示信息 -->
+    	<tip>
+    		<def>可乐</def>
+    		<cn>可乐</cn>
+    		<tw>可樂</tw>
+    		<en>cola</en>
+      </tip>
+    </smiley>
+  </group>
+
+</smileys>

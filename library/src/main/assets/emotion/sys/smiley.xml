@@ -1,0 +1,69 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<smileys>
+    <!-- 发送格式[sys:1002] sys代表分组 -->
+    <!-- id 表情包标识ID  name 分组名称  img 分组标题图片 type 表情类型(PIC|TEXT_PIC|EMOJI) order 排序 -->
+    <group id="sys" name="系统表情" normal_img="smiley_normal" selected_img="smiley_pressed"
+           type="TEXT_PIC" ext="png" order="1">
+        <!-- id 唯一编号(group_id:编号) filename="文件名" thumbnail="缩略图" cs_img_id="内容服务图片ID(下载表情包使用)" shortcuts="快捷方式(预留)"  -->
+        <smiley id="1001" filename="nd_am" thumbnail="nd_am"
+                cs_img_id="839382dccjkjcjcj" shortcuts="">
+            <!-- 提示信息 -->
+            <tip>
+                <def>(:</def>
+                <cn>笑脸</cn>
+                <tw>笑臉</tw>
+                <en>smile</en>
+            </tip>
+        </smiley>
+        <smiley id="1002" filename="nd_bs" thumbnail="nd_bs"
+                cs_img_id="839382dccjkjcjcj" shortcuts="">
+            <!-- 提示信息 -->
+            <tip>
+                <def>(:</def>
+                <cn>笑脸</cn>
+                <tw>笑臉</tw>
+                <en>smile</en>
+            </tip>
+        </smiley>
+        <smiley id="1003" filename="nd_by" thumbnail="nd_by"
+                cs_img_id="839382dccjkjcjcj" shortcuts="">
+            <!-- 提示信息 -->
+            <tip>
+                <def>(:</def>
+                <cn>笑脸</cn>
+                <tw>笑臉</tw>
+                <en>smile</en>
+            </tip>
+        </smiley>
+        <smiley id="1004" filename="nd_bz" thumbnail="nd_bz"
+                cs_img_id="839382dccjkjcjcj" shortcuts="">
+            <!-- 提示信息 -->
+            <tip>
+                <def>(:</def>
+                <cn>笑脸</cn>
+                <tw>笑臉</tw>
+                <en>smile</en>
+            </tip>
+        </smiley>
+        <smiley id="1005" filename="nd_ch" thumbnail="nd_ch"
+                cs_img_id="839382dccjkjcjcj" shortcuts="">
+            <!-- 提示信息 -->
+            <tip>
+                <def>(:</def>
+                <cn>笑脸</cn>
+                <tw>笑臉</tw>
+                <en>smile</en>
+            </tip>
+        </smiley>
+        <smiley id="1006" filename="nd_cy" thumbnail="nd_cy"
+                cs_img_id="839382dccjkjcjcj" shortcuts="">
+            <!-- 提示信息 -->
+            <tip>
+                <def>(:</def>
+                <cn>笑脸</cn>
+                <tw>笑臉</tw>
+                <en>smile</en>
+            </tip>
+        </smiley>
+    </group>
+</smileys>

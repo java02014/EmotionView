@@ -1,0 +1,37 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:tools="http://schemas.android.com/tools"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                tools:context="com.nd.android.sdp.im.common.emotion.MainActivity">
+
+    <com.nd.android.sdp.im.common.emotion.library.view.EmotionEditText
+        android:id="@+id/etInput"
+        android:layout_toLeftOf="@+id/btnSend"
+        android:singleLine="true"
+        android:gravity="center_vertical"
+        android:layout_width="match_parent"
+        android:layout_marginTop="10dp"
+        android:layout_height="42dp"/>
+
+    <Button
+        android:id="@+id/btnSend"
+        android:text="Send"
+        android:onClick="onSend"
+        android:layout_alignParentRight="true"
+        android:layout_width="64dp"
+        android:layout_height="wrap_content"/>
+
+    <com.nd.android.sdp.im.common.emotion.library.view.EmotionView
+        android:id="@+id/vEmotion"
+        android:layout_below="@id/etInput"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"></com.nd.android.sdp.im.common.emotion.library.view.EmotionView>
+
+    <Button
+        android:text="解码"
+        android:onClick="onDecode"
+        android:layout_below="@id/vEmotion"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+</RelativeLayout>

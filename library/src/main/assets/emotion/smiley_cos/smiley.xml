@@ -1,0 +1,154 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<smileys>
+	<!-- 发送格式[sys:1002] sys代表分组 -->
+	<!-- id 表情包标识ID  name 分组名称  img 分组标题图片 type 表情类型(PIC|TEXT_PIC|EMOJI) order 排序 -->
+  <group id="cos" name="英魂之刃" normal_img="1120_cos_aini" selected_img="1120_cos_aini" type="PIC" ext="gif" order="3">
+  	<!-- id 唯一编号(当是下载表情包的时候，这个ID直接用内容服务图片ID) -->
+  	<!-- id 唯一编号(在表情包内唯一) filename="文件名" thumbnail="缩略图" shortcuts="快捷方式(预留)"  -->
+    <smiley id="1120" filename="1120_cos_aini" thumbnail="1120_cos_aini"   shortcuts="" 	>
+    	<!-- 提示信息 -->
+    	<tip>
+    		<def>爱你</def>
+    		<cn>爱你</cn>
+    		<tw>愛妳 </tw>
+    		<en>LoveYou</en>
+      </tip>
+    </smiley>
+  <smiley id="1121" filename="1121_cos_baby" thumbnail="1121_cos_baby"   shortcuts="" 	>
+    	<!-- 提示信息 -->
+    	<tip>
+    		<def>宝贝乖</def>
+    		<cn>宝贝乖</cn>
+    		<tw>寶貝乖</tw>
+    		<en>BabyGood</en>
+      </tip>
+    </smiley>
+     <smiley id="1122" filename="1122_cos_bigong" thumbnail="1122_cos_bigong"   shortcuts="" 	>
+    	<!-- 提示信息 -->
+    	<tip>
+    		<def>逼供</def>
+    		<cn>逼供</cn>
+    		<tw>逼供</tw>
+    		<en>ExtortAConfession</en>
+      </tip>
+    </smiley>
+     <smiley id="1123" filename="1123_cos_bierewo" thumbnail="1123_cos_bierewo"   shortcuts="" 	>
+    	<!-- 提示信息 -->
+    	<tip>
+    		<def>别惹我</def>
+    		<cn>别惹我</cn>
+    		<tw>別惹我</tw>
+    		<en>Don'tMessWithMe</en>
+      </tip>
+    </smiley>
+     <smiley id="1124" filename="1124_cos_canren" thumbnail="1124_cos_canren"   shortcuts="" 	>
+    	<!-- 提示信息 -->
+    	<tip>
+    		<def>残忍</def>
+    		<cn>残忍</cn>
+    		<tw>殘忍</tw>
+    		<en>merciless</en>
+      </tip>
+    </smiley>
+     <smiley id="1125" filename="1125_cos_chaojia" thumbnail="1125_cos_chaojia"   shortcuts="" 	>
+    	<!-- 提示信息 -->
+    	<tip>
+    		<def>吵架</def>
+    		<cn>吵架</cn>
+    		<tw>吵架</tw>
+    		<en>quarrel</en>
+      </tip>
+    </smiley>
+     <smiley id="1126" filename="1126_cos_wait" thumbnail="1126_cos_wait"   shortcuts="" 	>
+    	<!-- 提示信息 -->
+    	<tip>
+    		<def>等等</def>
+    		<cn>等等</cn>
+    		<tw>等等</tw>
+    		<en>wait</en>
+      </tip>
+    </smiley>
+     <smiley id="1127" filename="1127_cos_followme" thumbnail="1127_cos_followme"   shortcuts="" 	>
+    	<!-- 提示信息 -->
+    	<tip>
+    		<def>跟我走</def>
+    		<cn>跟我走</cn>
+    		<tw>跟我走</tw>
+    		<en>FollowMe</en>
+      </tip>
+    </smiley>
+     <smiley id="1128" filename="1128_cos_jiujie" thumbnail="1128_cos_jiujie"   shortcuts="" 	>
+    	<!-- 提示信息 -->
+    	<tip>
+    		<def>纠结</def>
+    		<cn>纠结</cn>
+    		<tw>糾結</tw>
+    		<en>entanglement</en>
+      </tip>
+    </smiley>
+     <smiley id="1129" filename="1129_cos_kengdie" thumbnail="1129_cos_kengdie"   shortcuts="" 	>
+    	<!-- 提示信息 -->
+    	<tip>
+    		<def>坑爹</def>
+    		<cn>坑爹</cn>
+    		<tw>坑爹</tw>
+    		<en>DeceiveMe</en>
+      </tip>
+    </smiley>
+     <smiley id="1130" filename="1130_cos_hurryup" thumbnail="1130_cos_hurryup"   shortcuts="" 	>
+    	<!-- 提示信息 -->
+    	<tip>
+    		<def>快点</def>
+    		<cn>快点</cn>
+    		<tw>快點</tw>
+    		<en>HurryUp</en>
+      </tip>
+    </smiley>
+     <smiley id="1131" filename="1131_cos_die" thumbnail="1131_cos_die"   shortcuts="" 	>
+    	<!-- 提示信息 -->
+    	<tip>
+    		<def>去死吧</def>
+    		<cn>去死吧</cn>
+    		<tw>去死吧</tw>
+    		<en>GoToHell</en>
+      </tip>
+    </smiley>
+     <smiley id="1132" filename="1132_cos_dameit" thumbnail="1132_cos_dameit"   shortcuts="" 	>
+    	<!-- 提示信息 -->
+    	<tip>
+    		<def>死鬼</def>
+    		<cn>死鬼</cn>
+    		<tw>死鬼</tw>
+    		<en>Devil</en>
+      </tip>
+    </smiley>
+     <smiley id="1133" filename="1133_cos_xianqi" thumbnail="1133_cos_xianqi"   shortcuts="" 	>
+    	<!-- 提示信息 -->
+    	<tip>
+    		<def>嫌弃你</def>
+    		<cn>嫌弃你</cn>
+    		<tw>嫌棄妳 </tw>
+    		<en>AbandonYou</en>
+      </tip>
+    </smiley>
+     <smiley id="1134" filename="1134_cos_xiaoxiaoqi" thumbnail="1134_cos_xiaoxiaoqi"   shortcuts="" 	>
+    	<!-- 提示信息 -->
+    	<tip>
+    		<def>消消气</def>
+    		<cn>消消气</cn>
+    		<tw>消消氣</tw>
+    		<en>CooledDown</en>
+      </tip>
+    </smiley>
+     <smiley id="1135" filename="1135_cos_xiaoyanger" thumbnail="1135_cos_xiaoyanger"   shortcuts="" 	>
+    	<!-- 提示信息 -->
+    	<tip>
+    		<def>小样儿</def>
+    		<cn>小样儿</cn>
+    		<tw>小樣兒</tw>
+    		<en>SmallForGestationalAge</en>
+      </tip>
+    </smiley>
+  </group>
+
+</smileys>

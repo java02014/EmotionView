@@ -2,7 +2,7 @@ package com.nd.android.sdp.im.common.emotion.library.bean;
 
 import android.content.Context;
 
-import com.nd.android.sdp.im.common.emotion.library.stragedy.encode.IEncoder;
+import com.nd.android.sdp.im.common.emotion.library.encode.IEncoder;
 import com.nd.android.sdp.im.common.emotion.library.stragedy.files.IFileStragedy;
 import com.nd.android.sdp.im.common.emotion.library.view.IInputView;
 

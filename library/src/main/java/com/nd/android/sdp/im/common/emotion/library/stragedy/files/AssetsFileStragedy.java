@@ -1,9 +1,5 @@
 package com.nd.android.sdp.im.common.emotion.library.stragedy.files;
 
-import android.content.Context;
-
-import java.io.IOException;
-import java.io.InputStream;
 import java.io.Serializable;
 
 /**
@@ -15,13 +11,6 @@ public class AssetsFileStragedy implements IFileStragedy, Serializable {
      * 预置文件策略
      */
     public AssetsFileStragedy() {
-    }
-
-
-    @Override
-    public InputStream getConfigStream(Context pContext, String pGroupName) throws IOException {
-        final String fileName = "emotion/" + pGroupName + "/smiley.xml";
-        return pContext.getAssets().open(fileName);
     }
 
     @Override

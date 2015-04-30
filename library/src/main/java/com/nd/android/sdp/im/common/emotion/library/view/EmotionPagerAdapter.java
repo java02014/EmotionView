@@ -2,15 +2,11 @@ package com.nd.android.sdp.im.common.emotion.library.view;
 
 import android.content.Context;
 import android.support.v4.view.PagerAdapter;
-import android.support.v7.widget.GridLayout;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 
 import com.nd.android.sdp.im.common.emotion.library.bean.IGroup;
-import com.nostra13.universalimageloader.core.DisplayImageOptions;
-import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nd.android.sdp.im.common.emotion.library.bean.RecentGroup;
 
 /**
  * Created by Young on 2015/4/23.
@@ -29,6 +25,9 @@ public class EmotionPagerAdapter extends PagerAdapter {
     public EmotionPagerAdapter(Context pContext, IGroup pGroup) {
         mContext = pContext;
         mGroup = pGroup;
+        if (mGroup instanceof RecentGroup) {
+            ((RecentGroup) mGroup).refresh(pContext);
+        }
     }
 
     @Override

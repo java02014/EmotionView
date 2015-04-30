@@ -3,7 +3,7 @@ package com.nd.android.sdp.im.common.emotion.library.parser;
 import android.content.Context;
 
 import com.nd.android.sdp.im.common.emotion.library.bean.Group;
-import com.nd.android.sdp.im.common.emotion.library.stragedy.files.IFileStragedy;
+import com.nd.android.sdp.im.common.emotion.library.stragedy.configs.IConfigFileStragedy;
 
 /**
  * Created by Young on 2015/4/27.
@@ -18,5 +18,5 @@ public interface IEmotionParser {
      * @return the group
      * @author Young
      */
-    Group parse(Context pContext, String pDirName, IFileStragedy pFileStragedy);
+    Group parse(Context pContext, String pDirName, IConfigFileStragedy pFileStragedy);
 }

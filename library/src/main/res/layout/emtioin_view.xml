@@ -1,18 +1,43 @@
 <?xml version="1.0" encoding="utf-8"?>
 <merge xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <com.nd.android.sdp.im.common.emotion.library.view.WrapContentViewPager
-        android:id="@+id/vpEmotion"
+    <FrameLayout
+        android:background="#D7D7D7"
         android:layout_height="wrap_content"
-        android:layout_width="match_parent"/>
+        android:layout_width="match_parent">
+
+        <com.nd.android.sdp.im.common.emotion.library.view.WrapContentViewPager
+            android:id="@+id/vpEmotion"
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"/>
+
+        <RadioGroup
+            android:id="@+id/rgDot"
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:layout_gravity="bottom"
+            android:layout_marginBottom="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+        </RadioGroup>
+
+    </FrameLayout>
+
+    <View
+        android:layout_width="fill_parent"
+        android:layout_height="1px"
+        android:background="#ff888888"/>
 
     <HorizontalScrollView
         android:layout_width="match_parent"
-        android:layout_height="36dp">
+        android:layout_height="42dp">
 
         <LinearLayout
             android:id="@+id/llGroup"
+            android:background="@drawable/emotion_view_bg_group_normal"
             android:orientation="horizontal"
+            android:divider="#ff888888"
             android:layout_width="wrap_content"
             android:layout_height="match_parent">
 

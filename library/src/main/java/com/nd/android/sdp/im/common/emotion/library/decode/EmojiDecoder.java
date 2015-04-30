@@ -1,7 +1,8 @@
-package com.nd.android.sdp.im.common.emotion.library.stragedy.decode;
+package com.nd.android.sdp.im.common.emotion.library.decode;
 
 import android.text.Spannable;
 
+import com.nd.android.sdp.im.common.emotion.library.EmotionManager;
 import com.nd.android.sdp.im.common.emotion.library.bean.Emotion;
 import com.nd.android.sdp.im.common.emotion.library.bean.Group;
 import com.nd.android.sdp.im.common.emotion.library.span.EmotionSpan;
@@ -9,14 +10,16 @@ import com.nd.android.sdp.im.common.emotion.library.span.EmotionSpan;
 import java.util.Map;
 
 /**
- * Created by Young on 2015/4/28.
+ * Emoji解码器
+ *
+ * @author Young
  */
 public class EmojiDecoder implements IDecoder {
 
-    private Map<String,Group> mGroupMap;
+    private Map<String, Group> mGroupMap;
 
-    public EmojiDecoder(Map<String, Group> pGroupMap) {
-        mGroupMap = pGroupMap;
+    public EmojiDecoder() {
+        mGroupMap = EmotionManager.getInstance().getGroups();
     }
 
     @Override

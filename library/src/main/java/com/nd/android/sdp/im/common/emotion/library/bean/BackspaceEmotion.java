@@ -3,8 +3,6 @@ package com.nd.android.sdp.im.common.emotion.library.bean;
 import android.content.Context;
 
 import com.nd.android.sdp.im.common.emotion.library.R;
-import com.nd.android.sdp.im.common.emotion.library.stragedy.encode.IEncoder;
-import com.nd.android.sdp.im.common.emotion.library.stragedy.files.IFileStragedy;
 import com.nd.android.sdp.im.common.emotion.library.view.IInputView;
 
 /**
@@ -17,7 +15,7 @@ public class BackspaceEmotion extends Emotion {
     }
 
     @Override
-    public String getFileName() {
+    public String getThumbFileName() {
         return "drawable://" + R.drawable.emotion_view_backspace_normal;
     }
 

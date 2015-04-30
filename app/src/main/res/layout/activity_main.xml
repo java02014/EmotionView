@@ -4,6 +4,11 @@
                 android:layout_height="match_parent"
                 tools:context="com.nd.android.sdp.im.common.emotion.MainActivity">
 
+    <RelativeLayout
+        android:layout_alignParentBottom="true"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
     <com.nd.android.sdp.im.common.emotion.library.view.EmotionEditText
         android:id="@+id/etInput"
         android:layout_toLeftOf="@+id/btnSend"
@@ -27,10 +32,19 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"></com.nd.android.sdp.im.common.emotion.library.view.EmotionView>
 
+    </RelativeLayout>
+
     <Button
+        android:id="@+id/btnDecode"
         android:text="解码"
         android:onClick="onDecode"
-        android:layout_below="@id/vEmotion"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+    <Button
+        android:text="图片解码"
+        android:onClick="onPicDecode"
+        android:layout_below="@id/btnDecode"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
 

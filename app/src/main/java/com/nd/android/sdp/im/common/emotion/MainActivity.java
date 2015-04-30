@@ -8,12 +8,12 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
-import com.nd.android.sdp.im.common.emotion.library.EmotionModule;
-import com.nd.android.sdp.im.common.emotion.library.stragedy.encode.EmojiEncoder;
+import com.nd.android.sdp.im.common.emotion.library.EmotionManager;
+import com.nd.android.sdp.im.common.emotion.library.IEmotionEvent;
+import com.nd.android.sdp.im.common.emotion.library.encode.EmojiEncoder;
+import com.nd.android.sdp.im.common.emotion.library.utils.EmotionTypeUtils;
 import com.nd.android.sdp.im.common.emotion.library.view.EmotionEditText;
 import com.nd.android.sdp.im.common.emotion.library.view.EmotionView;
-import com.nd.android.sdp.im.common.emotion.library.IEmotionEvent;
-import com.nd.android.sdp.im.common.emotion.library.view.IInputView;
 
 
 public class MainActivity extends ActionBarActivity {
@@ -26,7 +26,7 @@ public class MainActivity extends ActionBarActivity {
         setContentView(R.layout.activity_main);
         EmotionView emotionView = (EmotionView) findViewById(R.id.vEmotion);
         mInputView = (EmotionEditText) findViewById(R.id.etInput);
-        emotionView.init(0, new IEmotionEvent() {
+        emotionView.init(EmotionTypeUtils.ALL_TYPE, new IEmotionEvent() {
             @Override
             public void onEmotionSend(String emotionEncoded) {
                 Log.e("TEST", emotionEncoded);
@@ -61,7 +61,13 @@ public class MainActivity extends ActionBarActivity {
     }
 
     public void onDecode(View view) {
-        final Spannable decode = EmotionModule.getInstance().decode("[sys:1003][sys:1002]" + EmojiEncoder.newString(128530) + EmojiEncoder.newString(128527), 72, 72);
+        final Spannable decode = EmotionManager.getInstance().decode("[sys:1003][sys:1002]" + EmojiEncoder.newString(128530) + EmojiEncoder.newString(128527), (int) mInputView.getTextSize(), (int) mInputView.getTextSize());
         mInputView.setText(decode);
+    }
+
+    public void onPicDecode(View view) {
+        Log.e("TEST", EmotionManager.getInstance().decodePic("[cat:281]"));
+        Log.e("TEST", EmotionManager.getInstance().decodePic("[sdcard:1006]"));
+        Log.e("TEST", EmotionManager.getInstance().decodePic("[content:1714297]"));
     }
 }

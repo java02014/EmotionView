@@ -1,4 +1,4 @@
-package com.nd.android.sdp.im.common.emotion.library.stragedy.encode;
+package com.nd.android.sdp.im.common.emotion.library.encode;
 
 /**
  * Created by Young on 2015/4/27.

@@ -48,31 +48,26 @@ public class PicGroup extends Group {
     }
 
     @Override
-    public int getPageCount() {
-        return (int) Math.ceil((float) mEmotionArrays.length / (float) (getColumn() * getRow()));
-    }
-
-    @Override
     public View getGridView(Context pContext, int pPosition) {
         final LayoutInflater inflater = LayoutInflater.from(pContext);
         FrameLayout view = (FrameLayout) inflater.inflate(R.layout.pager_emotion, null);
         TableLayout tableLayout = (TableLayout) view.getChildAt(0);
         final int emotionCount = getEmotionCount(pPosition);
+        int screenWidht = pContext.getResources().getDisplayMetrics().widthPixels;
         if (emotionCount > 0) {
             final int row = ((emotionCount - 1) / getColumn()) + 1;
             for (int i = 0; i < row; i++) {
                 TableRow tableRow = new TableRow(pContext);
                 final int column = i < (row - 1) ? getColumn() : ((emotionCount - 1) % getColumn() + 1);
-                tableRow.setWeightSum(getColumn());
                 for (int j = 0; j < column; j++) {
                     final LinearLayout inflate = (LinearLayout) inflater.inflate(R.layout.emotion_view_item_pic_emotion, null);
                     final ImageView emotionView = (ImageView) inflate.getChildAt(0);
                     final Emotion emotion = getEmotion(pPosition, i * getColumn() + j);
-                    ImageLoader.getInstance().displayImage(emotion.getFileName(), emotionView, mOptions);
+                    ImageLoader.getInstance().displayImage(emotion.getThumbFileName(), emotionView, sDisplayImageOptions);
                     inflate.setOnClickListener(this);
                     tableRow.addView(inflate);
                     final TableRow.LayoutParams layoutParams = (TableRow.LayoutParams) inflate.getLayoutParams();
-                    layoutParams.weight = 1;
+                    layoutParams.width = screenWidht / getColumn();
                     inflate.setLayoutParams(layoutParams);
                     inflate.setTag(emotion);
                 }
@@ -83,6 +78,14 @@ public class PicGroup extends Group {
             tvNoHistory.setVisibility(View.VISIBLE);
         }
         return view;
+    }
+
+    @Override
+    public int getPageCount() {
+        if (mEmotionArrays == null) {
+            return 1;
+        }
+        return (int) Math.ceil((float) mEmotionArrays.length / (float) (getColumn() * getRow()));
     }
 
 }

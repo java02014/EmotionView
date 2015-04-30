@@ -4,9 +4,9 @@ import android.content.Context;
 
 import com.nd.android.sdp.im.common.emotion.library.EmotionHandlers;
 import com.nd.android.sdp.im.common.emotion.library.EmotionRecentsManager;
-import com.nd.android.sdp.im.common.emotion.library.stragedy.encode.EmojiEncoder;
-import com.nd.android.sdp.im.common.emotion.library.stragedy.encode.Encoder;
-import com.nd.android.sdp.im.common.emotion.library.stragedy.encode.IEncoder;
+import com.nd.android.sdp.im.common.emotion.library.encode.EmojiEncoder;
+import com.nd.android.sdp.im.common.emotion.library.encode.Encoder;
+import com.nd.android.sdp.im.common.emotion.library.encode.IEncoder;
 import com.nd.android.sdp.im.common.emotion.library.stragedy.files.IFileStragedy;
 import com.nd.android.sdp.im.common.emotion.library.utils.ObjectSerializer;
 import com.nd.android.sdp.im.common.emotion.library.view.IInputView;
@@ -116,8 +116,12 @@ public class Emotion implements Serializable {
         mId = pId;
     }
 
-    public String getFileName() {
+    public String getThumbFileName() {
         return mFileStragedy.getImagePath(mGroupDirName, mFileName, mThumbExt);
+    }
+
+    public String getFileName() {
+        return mFileStragedy.getImagePath(mGroupDirName, mFileName, mExt);
     }
 
     public void setFileName(String pFileName) {
@@ -173,4 +177,5 @@ public class Emotion implements Serializable {
         EmotionHandlers.addEmotion(pInputView, this, (int) pInputView.getTextSize(), (int) pInputView.getTextSize());
         EmotionRecentsManager.getInstance(pContext).push(this);
     }
+
 }

@@ -1,10 +1,6 @@
-package com.nd.android.sdp.im.common.emotion.library.stragedy.decode;
+package com.nd.android.sdp.im.common.emotion.library.decode;
 
 import android.text.Spannable;
-
-import com.nd.android.sdp.im.common.emotion.library.bean.Group;
-
-import java.util.Map;
 
 /**
  * 解码器

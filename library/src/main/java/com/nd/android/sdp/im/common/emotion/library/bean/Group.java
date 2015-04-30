@@ -3,16 +3,15 @@ package com.nd.android.sdp.im.common.emotion.library.bean;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 
-import com.nd.android.sdp.im.common.emotion.library.view.OnItemClickListener;
 import com.nd.android.sdp.im.common.emotion.library.R;
 import com.nd.android.sdp.im.common.emotion.library.stragedy.files.IFileStragedy;
+import com.nd.android.sdp.im.common.emotion.library.view.OnItemClickListener;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
@@ -26,10 +25,11 @@ import java.util.Map;
  */
 public abstract class Group implements IGroup, View.OnClickListener {
 
-    protected final DisplayImageOptions mOptions = new DisplayImageOptions.Builder()
+    protected static DisplayImageOptions sDisplayImageOptions = new DisplayImageOptions.Builder()
             .cacheInMemory(true)
             .cacheOnDisk(true)
             .build();
+
     private final IFileStragedy mFileStragedy;
     /**
      * 表情
@@ -47,7 +47,7 @@ public abstract class Group implements IGroup, View.OnClickListener {
     /**
      * 类型
      */
-    private String mType;
+    private int mType;
     /**
      * 扩展
      */
@@ -131,11 +131,11 @@ public abstract class Group implements IGroup, View.OnClickListener {
         mId = pId;
     }
 
-    public String getType() {
+    public int getType() {
         return mType;
     }
 
-    public void setType(String pType) {
+    public void setType(int pType) {
         mType = pType;
     }
 
@@ -157,7 +157,10 @@ public abstract class Group implements IGroup, View.OnClickListener {
 
     @Override
     public int getPageCount() {
-        return (mEmotions.keySet().size() / (getColumn() * getRow())) + 1;
+        if (mEmotionArrays == null) {
+            return 1;
+        }
+        return (int) Math.ceil((float) mEmotionArrays.length / (float) (getColumn() * getRow() - 1));
     }
 
     @Override
@@ -176,20 +179,20 @@ public abstract class Group implements IGroup, View.OnClickListener {
         FrameLayout view = (FrameLayout) inflater.inflate(R.layout.pager_emotion, null);
         TableLayout tableLayout = (TableLayout) view.getChildAt(0);
         final int emotionCount = getEmotionCount(pPosition);
-        final int row = emotionCount / getColumn();
+        final int row = (int) Math.ceil((float) emotionCount / (float) getColumn());
+        int screenWidht = pContext.getResources().getDisplayMetrics().widthPixels;
         for (int i = 0; i < row; i++) {
             TableRow tableRow = new TableRow(pContext);
             final int column = i < (row - 1) ? getColumn() : ((emotionCount - 1) % getColumn() + 1);
-            tableRow.setWeightSum(column);
             for (int j = 0; j < column; j++) {
                 final LinearLayout inflate = (LinearLayout) inflater.inflate(R.layout.emotion_view_item_emotion, null);
                 final ImageView emotionView = (ImageView) inflate.getChildAt(0);
                 final Emotion emotion = getEmotion(pPosition, i * getColumn() + j);
-                ImageLoader.getInstance().displayImage(emotion.getFileName(), emotionView, mOptions);
+                ImageLoader.getInstance().displayImage(emotion.getThumbFileName(), emotionView, sDisplayImageOptions);
                 inflate.setOnClickListener(this);
                 tableRow.addView(inflate);
                 final TableRow.LayoutParams layoutParams = (TableRow.LayoutParams) inflate.getLayoutParams();
-                layoutParams.weight = 1;
+                layoutParams.width = screenWidht / getColumn();
                 inflate.setLayoutParams(layoutParams);
                 inflate.setTag(emotion);
             }

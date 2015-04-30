@@ -9,7 +9,9 @@ import com.nd.android.sdp.im.common.emotion.library.bean.Emotion;
 import com.nd.android.sdp.im.common.emotion.library.bean.Group;
 import com.nd.android.sdp.im.common.emotion.library.bean.PicGroup;
 import com.nd.android.sdp.im.common.emotion.library.bean.SysGroup;
+import com.nd.android.sdp.im.common.emotion.library.stragedy.configs.IConfigFileStragedy;
 import com.nd.android.sdp.im.common.emotion.library.stragedy.files.IFileStragedy;
+import com.nd.android.sdp.im.common.emotion.library.utils.EmotionTypeUtils;
 
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
@@ -19,16 +21,33 @@ import java.io.InputStream;
 import java.util.ArrayList;
 
 /**
- * Created by Young on 2015/4/27.
+ * 默认解析器
+ *
+ * @author Young
  */
-public class EmotionParser implements IEmotionParser {
+public class DefaultEmotionParser implements IEmotionParser {
 
     public static final String SYS_TAG = "sys";
 
+    private IFileStragedy mFileStragedy;
+
+    /**
+     * 构造器
+     *
+     * @param pFileStragedy the p config file stragedy
+     */
+    public DefaultEmotionParser(IFileStragedy pFileStragedy) {
+        mFileStragedy = pFileStragedy;
+    }
+
     @Override
-    public Group parse(Context pContext, String pDirName, IFileStragedy pFileStragedy) {
+    public Group parse(Context pContext, String pDirName, IConfigFileStragedy pFileStragedy) {
         try {
-            final InputStream inputStream = pFileStragedy.getConfigStream(pContext, pDirName);
+            final InputStream inputStream = pFileStragedy.getConfig();
+            if (inputStream == null) {
+                return null;
+            }
+            IFileStragedy fileStragedy = mFileStragedy;
             XmlPullParser xrp = Xml.newPullParser();
             xrp.setInput(inputStream, "UTF-8");
             Group group = null;
@@ -39,24 +58,25 @@ public class EmotionParser implements IEmotionParser {
                     if (tagName.equals("group")) {
                         final String id = xrp.getAttributeValue(null, "id");
                         if (id.equals(SYS_TAG)) {
-                            group = new SysGroup(pFileStragedy);
+                            group = new SysGroup(fileStragedy);
                             group.setId("sys");
                         } else if (id.equals("e")) {
-                            group = new EmojiGroup(pFileStragedy);
+                            group = new EmojiGroup(fileStragedy);
                             group.setId("e");
                         } else {
-                            group = new PicGroup(pFileStragedy);
+                            group = new PicGroup(fileStragedy);
                             group.setId(xrp.getAttributeValue(null, "id"));
                         }
                         group.setNormalImg(xrp.getAttributeValue(null, "normal_img"));
                         group.setSelecteddImg(xrp.getAttributeValue(null, "selected_img"));
-                        group.setType(xrp.getAttributeValue(null, "type"));
+                        final String type = xrp.getAttributeValue(null, "type");
+                        group.setType(EmotionTypeUtils.strToInt(type));
                         group.setExt(xrp.getAttributeValue(null, "ext"));
                         group.setThumbExt("png");
                         group.setDirName(pDirName);
                         group.setOrder(Integer.parseInt(xrp.getAttributeValue(null, "order")));
                     } else if (tagName.equals("smiley")) {
-                        Emotion emotion = Emotion.create(pFileStragedy, group.getClass());
+                        Emotion emotion = Emotion.create(fileStragedy, group.getClass());
                         emotion.setId(xrp.getAttributeValue(null, "id"));
                         emotion.setFileName(xrp.getAttributeValue(null, "filename"));
                         emotion.setGroupID(group.getId());

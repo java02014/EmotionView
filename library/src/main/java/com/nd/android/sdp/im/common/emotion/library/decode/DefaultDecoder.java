@@ -1,8 +1,8 @@
-package com.nd.android.sdp.im.common.emotion.library.stragedy.decode;
+package com.nd.android.sdp.im.common.emotion.library.decode;
 
 import android.text.Spannable;
 
-import com.nd.android.sdp.im.common.emotion.library.EmotionModule;
+import com.nd.android.sdp.im.common.emotion.library.EmotionManager;
 import com.nd.android.sdp.im.common.emotion.library.bean.Emotion;
 import com.nd.android.sdp.im.common.emotion.library.bean.Group;
 import com.nd.android.sdp.im.common.emotion.library.span.EmotionSpan;
@@ -20,8 +20,8 @@ public class DefaultDecoder implements IDecoder {
 
     private Map<String, Group> mGroupMap;
 
-    public DefaultDecoder(Map<String, Group> pGroupMap) {
-        mGroupMap = pGroupMap;
+    public DefaultDecoder() {
+        mGroupMap = EmotionManager.getInstance().getGroups();
     }
 
     @Override
@@ -31,7 +31,9 @@ public class DefaultDecoder implements IDecoder {
         Pattern p = Pattern.compile(regEx);
         Matcher m = p.matcher(textString);
         while (m.find()) {
-            final Emotion emotion = mGroupMap.get(m.group(1)).getEmotions().get(m.group(2));
+            final String group = m.group(1);
+            final String id = m.group(2);
+            final Emotion emotion = mGroupMap.get(group).getEmotions().get(id);
             if (emotion != null) {
                 pSpannable.setSpan(new EmotionSpan(emotion, pEmojiSize, pTextSize), m.start(), m.end(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
             }

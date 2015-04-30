@@ -5,13 +5,11 @@ import android.text.SpannableStringBuilder;
 import android.util.Pair;
 
 import com.nd.android.sdp.im.common.emotion.library.bean.Emotion;
-import com.nd.android.sdp.im.common.emotion.library.bean.Group;
+import com.nd.android.sdp.im.common.emotion.library.decode.IDecoder;
 import com.nd.android.sdp.im.common.emotion.library.span.EmotionSpan;
-import com.nd.android.sdp.im.common.emotion.library.stragedy.decode.IDecoder;
 import com.nd.android.sdp.im.common.emotion.library.view.IInputView;
 
 import java.util.ArrayList;
-import java.util.Map;
 
 /**
  * 富文本处理类
@@ -29,7 +27,7 @@ public class EmotionHandlers {
         for (int i = 0; i < oldSpans.length; i++) {
             pSpannable.removeSpan(oldSpans[i]);
         }
-        ArrayList<IDecoder> decoderList = EmotionModule.getInstance().getDecoders();
+        ArrayList<IDecoder> decoderList = EmotionManager.getInstance().getConfigs().getDecoders();
         for (IDecoder decoder : decoderList) {
             decoder.decode(pSpannable, emojiSize, textSize);
         }

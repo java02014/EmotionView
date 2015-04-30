@@ -1,6 +1,5 @@
 package com.nd.android.sdp.im.common.emotion.library.span;
 
-import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Paint;
@@ -42,7 +41,7 @@ public class EmotionSpan extends DynamicDrawableSpan {
     public Drawable getDrawable() {
         if (mDrawable == null) {
             try {
-                final Bitmap bitmap = ImageLoader.getInstance().loadImageSync(mEmotion.getFileName());
+                final Bitmap bitmap = ImageLoader.getInstance().loadImageSync(mEmotion.getThumbFileName());
                 mHeight = mSize;
                 mWidth = mHeight * bitmap.getWidth() / bitmap.getHeight();
                 mTop = (mTextSize - mHeight) / 2;

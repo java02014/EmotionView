@@ -5,7 +5,7 @@
 
 Add repositories to root(build.gradle) all project
 ```groovy
- repositories {
+repositories {
     jcenter()
     maven {
         url "http://dl.bintray.com/eyyoung/maven"

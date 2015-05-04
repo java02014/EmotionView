@@ -1,8 +1,6 @@
 ## Preview
-![Preview](https://raw.githubusercontent.com/eyyoung/EmotionView/master/preview/screenshot.png =320x480)
-
+<img src="https://raw.githubusercontent.com/eyyoung/EmotionView/master/preview/screenshot.png" alt="Preview" style="width: 320px;"/>
 ## Setup
-
 Add repositories to root(build.gradle) all project
 ```groovy
 repositories {

@@ -1,5 +1,6 @@
 apply plugin: 'com.android.library'
 apply plugin: 'me.tatarka.retrolambda'
+apply plugin: 'com.jfrog.bintray'
 
 android {
 
@@ -30,11 +31,11 @@ dependencies {
     compile 'com.android.support:support-v4:21.0.3'
     provided 'com.nostra13.universalimageloader:universal-image-loader:1.9.3_r1'
     compile 'com.android.support:gridlayout-v7:21.0.+'
-    compile 'com.novoda:sexp:1.0.3'
     compile 'com.netflix.rxjava:rxjava-android:0.20.7'
 }
 
 buildscript {
+
     repositories {
         mavenCentral()
     }
@@ -65,6 +66,28 @@ afterEvaluate { project ->
                 pom.artifactId = "emotion"
                 pom.groupId = "com.nd.android.sdp.im.common.widget"
             }
+        }
+    }
+}
+
+group = 'com.young.android.EmotionView'
+version = '1.0.0'
+
+bintray {
+    user = bintrayUser
+    key = bintrayApiKey
+
+    configurations = ['archives']
+    pkg {
+        repo = "maven"
+        name = "com.young.android.EmotionView"
+        websiteUrl = "https://github.com/eyyoung/EmotionView"
+        vcsUrl = "https://github.com/eyyoung/EmotionView.git"
+        issueTrackerUrl = 'https://github.com/eyyoung/EmotionView/issues'
+        licenses = ["Apache-2.0"]
+        publish = true
+        version {
+            name = '1.0.0' //Bintray logical version name
         }
     }
 }

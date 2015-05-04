@@ -1,5 +1,5 @@
 ## Preview
-![Preview](https://raw.github.com/eyyoung/EmotionView/Master/preview/screenshot.png)
+![Preview](https://raw.githubusercontent.com/eyyoung/EmotionView/master/preview/screenshot.png)
 
 ## Setup
 

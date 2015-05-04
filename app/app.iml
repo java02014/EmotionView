@@ -90,7 +90,6 @@
     <orderEntry type="library" exported="" name="universal-image-loader-1.9.3_r1" level="project" />
     <orderEntry type="library" exported="" name="rxjava-android-0.20.7" level="project" />
     <orderEntry type="library" exported="" name="support-annotations-21.0.3" level="project" />
-    <orderEntry type="library" exported="" name="sexp-1.0.3" level="project" />
     <orderEntry type="library" exported="" name="support-v4-21.0.3" level="project" />
     <orderEntry type="library" exported="" name="rxjava-core-0.20.7" level="project" />
     <orderEntry type="module" module-name="library" exported="" />

@@ -1,5 +1,5 @@
 ## Preview
-![Preview](https://raw.githubusercontent.com/eyyoung/EmotionView/master/preview/screenshot.png)
+![Preview](https://raw.githubusercontent.com/eyyoung/EmotionView/master/preview/screenshot.png =320x480)
 
 ## Setup
 

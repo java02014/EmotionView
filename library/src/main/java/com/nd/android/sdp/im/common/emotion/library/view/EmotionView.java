@@ -36,7 +36,11 @@ import java.util.List;
 import java.util.Map;
 
 import rx.Observable;
+import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
+import rx.functions.Action0;
+import rx.functions.Action1;
+import rx.functions.Func1;
 import rx.schedulers.Schedulers;
 
 /**
@@ -99,37 +103,54 @@ public class EmotionView extends LinearLayout implements OnItemClickListener, Co
      * @param pInputView    输入输出控件
      * @author Young
      */
-    public void init(int pEmotionTypes, IEmotionEvent pEmotionEvent, IInputView pInputView) {
+    public void init(final int pEmotionTypes, IEmotionEvent pEmotionEvent, IInputView pInputView) {
         mInputView = pInputView;
         mEmotionEvent = pEmotionEvent;
-        Observable.create(pSubscriber -> {
-            EmotionManager.getInstance().initData(mContext);
-            final Map<String, Group> emotionGroups = EmotionManager.getInstance().getGroups(pEmotionTypes);
-            if (emotionGroups != null) {
-                pSubscriber.onNext(emotionGroups);
-            } else {
-                pSubscriber.onError(new Throwable(mContext.getString(R.string.emotion_view_get_config_error)));
+        Observable.create(new Observable.OnSubscribe<Object>() {
+            @Override
+            public void call(Subscriber<? super Object> pSubscriber) {
+                EmotionManager.getInstance().initData(mContext);
+                final Map<String, Group> emotionGroups = EmotionManager.getInstance().getGroups(pEmotionTypes);
+                if (emotionGroups != null) {
+                    pSubscriber.onNext(emotionGroups);
+                } else {
+                    pSubscriber.onError(new Throwable(mContext.getString(R.string.emotion_view_get_config_error)));
+                }
             }
-        }).filter(pResult -> pResult != null && !((Map<String, Group>) pResult).isEmpty())
+        }).filter(new Func1<Object, Boolean>() {
+            @Override
+            public Boolean call(Object pResult) {
+                return pResult != null && !((Map<String, Group>) pResult).isEmpty();
+            }
+        })
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(pResult -> {
-                    mEmotionGroups = (Map<String, Group>) pResult;
-                    Group defaultGroup = mEmotionGroups.get(DefaultEmotionParser.SYS_TAG);
-                    if (defaultGroup == null) {
-                        final Iterator<Group> iterator = mEmotionGroups.values().iterator();
-                        defaultGroup = iterator.next();
+                .subscribe(new Action1<Object>() {
+                    @Override
+                    public void call(Object pResult) {
+                        mEmotionGroups = (Map<String, Group>) pResult;
+                        Group defaultGroup = mEmotionGroups.get(DefaultEmotionParser.SYS_TAG);
+                        if (defaultGroup == null) {
+                            final Iterator<Group> iterator = mEmotionGroups.values().iterator();
+                            defaultGroup = iterator.next();
+                        }
+                        mVpEmotion.setAdapter(new EmotionPagerAdapter(mContext, defaultGroup));
+                        // 获取到表情
+                        EmotionView.this.initGroupBtn();
+                        EmotionView.this.initDot();
+                        EmotionView.this.setSelectGroupBtn(defaultGroup);
                     }
-                    mVpEmotion.setAdapter(new EmotionPagerAdapter(mContext, defaultGroup));
-                    // 获取到表情
-                    initGroupBtn();
-                    initDot();
-                    setSelectGroupBtn(defaultGroup);
-                }, pError -> {
-                    pError.printStackTrace();
-                    Toast.makeText(mContext, pError.getMessage(), Toast.LENGTH_LONG).show();
-                }, () -> {
+                }, new Action1<Throwable>() {
+                    @Override
+                    public void call(Throwable pError) {
+                        pError.printStackTrace();
+                        Toast.makeText(mContext, pError.getMessage(), Toast.LENGTH_LONG).show();
+                    }
+                }, new Action0() {
+                    @Override
+                    public void call() {
 
+                    }
                 });
     }
 
@@ -205,16 +226,19 @@ public class EmotionView extends LinearLayout implements OnItemClickListener, Co
         }
     }
 
-    private OnClickListener mOnGroupClick = v -> {
-        final Group group = mEmotionGroups.get(v.getTag());
-        mVpEmotion.setAdapter(new EmotionPagerAdapter(mContext, group));
-        initDot();
-        final int childCount = mLlGroup.getChildCount();
-        for (int i = 0; i < childCount; i++) {
-            final View view = mLlGroup.getChildAt(i);
-            view.setSelected(false);
+    private OnClickListener mOnGroupClick = new OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            final Group group = mEmotionGroups.get(v.getTag());
+            mVpEmotion.setAdapter(new EmotionPagerAdapter(mContext, group));
+            EmotionView.this.initDot();
+            final int childCount = mLlGroup.getChildCount();
+            for (int i = 0; i < childCount; i++) {
+                final View view = mLlGroup.getChildAt(i);
+                view.setSelected(false);
+            }
+            v.setSelected(true);
         }
-        v.setSelected(true);
     };
 
     @Override

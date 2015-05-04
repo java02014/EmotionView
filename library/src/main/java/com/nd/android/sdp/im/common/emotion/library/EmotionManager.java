@@ -21,6 +21,7 @@ import com.nd.android.sdp.im.common.emotion.library.utils.EmotionTypeUtils;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.LinkedHashMap;
 import java.util.List;
 
@@ -115,7 +116,12 @@ public class EmotionManager {
             final List<Group> emotionGroups = getter.getEmotionGroups(pContext);
             groups.addAll(emotionGroups);
         }
-        Collections.sort(groups, (lhs, rhs) -> lhs.getOrder() - rhs.getOrder());
+        Collections.sort(groups, new Comparator<Group>() {
+            @Override
+            public int compare(Group lhs, Group rhs) {
+                return lhs.getOrder() - rhs.getOrder();
+            }
+        });
         for (Group group : groups) {
             mGroups.put(group.getId(), group);
         }
@@ -130,18 +136,23 @@ public class EmotionManager {
      * @return the spannable
      * @author Young
      */
-    public Spannable decode(String text, int pTextSize, int pDrawableSize) {
+    public CharSequence decode(CharSequence text, int pTextSize, int pDrawableSize) {
         checkConfig();
         if (mGroups == null) {
             // TODO 外头需要等待
             return null;
         }
-        SpannableStringBuilder spannableStringBuilder = new SpannableStringBuilder(text);
+        Spannable spannable;
+        if (!(text instanceof Spannable)) {
+            spannable = new SpannableStringBuilder(text);
+        } else {
+            spannable = (Spannable) text;
+        }
         final ArrayList<IDecoder> decoders = mEmotionConfig.getDecoders();
         for (IDecoder decoder : decoders) {
-            decoder.decode(spannableStringBuilder, pTextSize, pDrawableSize);
+            decoder.decode(spannable, pTextSize, pDrawableSize);
         }
-        return spannableStringBuilder;
+        return spannable;
     }
 
     /**

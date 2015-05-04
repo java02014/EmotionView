@@ -1,13 +1,7 @@
 apply plugin: 'com.android.library'
-apply plugin: 'me.tatarka.retrolambda'
 apply plugin: 'com.jfrog.bintray'
 
 android {
-
-    compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
-    }
 
     compileSdkVersion 21
     buildToolsVersion "21.1.2"
@@ -32,17 +26,6 @@ dependencies {
     provided 'com.nostra13.universalimageloader:universal-image-loader:1.9.3_r1'
     compile 'com.android.support:gridlayout-v7:21.0.+'
     compile 'com.netflix.rxjava:rxjava-android:0.20.7'
-}
-
-buildscript {
-
-    repositories {
-        mavenCentral()
-    }
-
-    dependencies {
-        classpath 'me.tatarka:gradle-retrolambda:3.0.1'
-    }
 }
 
 repositories {
@@ -90,4 +73,10 @@ bintray {
             name = '1.0.0' //Bintray logical version name
         }
     }
+}
+
+task androidJavadocs(type: Javadoc) {
+    options.charSet = 'UTF-8'
+    options.encoding = "UTF-8"
+    source = android.sourceSets.main.java.source
 }

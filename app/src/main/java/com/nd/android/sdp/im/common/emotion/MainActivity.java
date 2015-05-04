@@ -2,7 +2,6 @@ package com.nd.android.sdp.im.common.emotion;
 
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
-import android.text.Spannable;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -61,7 +60,7 @@ public class MainActivity extends ActionBarActivity {
     }
 
     public void onDecode(View view) {
-        final Spannable decode = EmotionManager.getInstance().decode("[sys:1003][sys:1002]" + EmojiEncoder.newString(128530) + EmojiEncoder.newString(128527), (int) mInputView.getTextSize(), (int) mInputView.getTextSize());
+        final CharSequence decode = EmotionManager.getInstance().decode("[sys:1003][sys:1002]" + EmojiEncoder.newString(128530) + EmojiEncoder.newString(128527), (int) mInputView.getTextSize(), (int) mInputView.getTextSize());
         mInputView.setText(decode);
     }
 

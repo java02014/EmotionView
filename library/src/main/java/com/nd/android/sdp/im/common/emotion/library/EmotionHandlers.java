@@ -17,23 +17,6 @@ import java.util.ArrayList;
 public class EmotionHandlers {
 
     /**
-     * 添加表情
-     *
-     * @author Young
-     */
-    public static void updateEmotions(Spannable pSpannable, int emojiSize, int textSize) {
-        int textLength = pSpannable.length();
-        EmotionSpan[] oldSpans = pSpannable.getSpans(0, textLength, EmotionSpan.class);
-        for (int i = 0; i < oldSpans.length; i++) {
-            pSpannable.removeSpan(oldSpans[i]);
-        }
-        ArrayList<IDecoder> decoderList = EmotionManager.getInstance().getConfigs().getDecoders();
-        for (IDecoder decoder : decoderList) {
-            decoder.decode(pSpannable, emojiSize, textSize);
-        }
-    }
-
-    /**
      * Update text.
      *
      * @param pInputView    the input view
@@ -52,6 +35,28 @@ public class EmotionHandlers {
         updateEmotions(spannableStringBuilder, pTextSize, pDrawableSize);
         pInputView.setText(spannableStringBuilder);
         pInputView.setSelection(new Pair<>(selectionStart + length, selectionStart + length));
+    }
+
+    /**
+     * 添加表情
+     *
+     * @author Young
+     */
+    public static void updateEmotions(Spannable pSpannable, int emojiSize, int textSize) {
+        int textLength = pSpannable.length();
+        EmotionSpan[] oldSpans = pSpannable.getSpans(0, textLength, EmotionSpan.class);
+        for (int i = 0; i < oldSpans.length; i++) {
+            pSpannable.removeSpan(oldSpans[i]);
+        }
+        final EmotionConfig configs = EmotionManager.getInstance().getConfigs();
+        if (configs != null) {
+            ArrayList<IDecoder> decoderList = configs.getDecoders();
+            if (decoderList != null) {
+                for (IDecoder decoder : decoderList) {
+                    decoder.decode(pSpannable, emojiSize, textSize);
+                }
+            }
+        }
     }
 
 }

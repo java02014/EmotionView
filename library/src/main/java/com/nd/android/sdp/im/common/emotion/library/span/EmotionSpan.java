@@ -18,15 +18,11 @@ import java.lang.ref.WeakReference;
 public class EmotionSpan extends DynamicDrawableSpan {
 
     private final Emotion mEmotion;
-
     private final int mSize;
-
     private final int mTextSize;
     private int mWidth;
     private int mHeight;
-
     private Drawable mDrawable;
-
     private WeakReference<Drawable> mDrawableRef;
     private int mTop;
 
@@ -35,6 +31,15 @@ public class EmotionSpan extends DynamicDrawableSpan {
         mEmotion = pEmotion;
         mWidth = mHeight = mSize = pSize;
         mTextSize = pTextSize;
+    }
+
+    /**
+     * Gets emotion.
+     *
+     * @return the emotion
+     */
+    public Emotion getEmotion() {
+        return mEmotion;
     }
 
     @Override

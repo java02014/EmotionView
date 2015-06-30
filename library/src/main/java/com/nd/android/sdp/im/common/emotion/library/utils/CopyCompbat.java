@@ -1,5 +1,6 @@
 package com.nd.android.sdp.im.common.emotion.library.utils;
 
+import android.text.Editable;
 import android.text.Selection;
 import android.text.Spanned;
 import android.text.TextUtils;
@@ -49,6 +50,37 @@ public class CopyCompbat {
             return selectionEnd;
         } else {
             return pEmotionEditText.getSelectionEnd();
+        }
+    }
+
+    /**
+     * onSelectionChangeCombat 兼容性处理
+     *
+     * @param pEmotionEditText
+     * @param selStart
+     * @param selEnd
+     */
+    public static void onSelectionChangeCombat(EmotionEditText pEmotionEditText, int selStart, int selEnd) {
+        boolean isMultiSelect = (selStart != selEnd);// 是否区域性选择
+        final Editable editableText = pEmotionEditText.getEditableText();
+        if (!TextUtils.isEmpty(editableText) && selEnd < editableText.length()) {
+            final EmotionSpan[] spans = editableText.getSpans(selStart - 1, selEnd, EmotionSpan.class);
+            if (spans.length > 0) {
+                final int spanEnd = editableText.getSpanEnd(spans[spans.length - 1]);
+                if (selEnd != spanEnd) {
+                    selEnd = spanEnd;
+                }
+                if (!isMultiSelect) {
+                    selStart = selEnd;
+                } else {
+                    final int firstSpanStart = editableText.getSpanStart(spans[0]);
+                    final int firstSpanEnd = editableText.getSpanEnd(spans[0]);
+                    if (selStart >= firstSpanStart && selStart < firstSpanEnd) {
+                        selStart = firstSpanStart;
+                    }
+                }
+                pEmotionEditText.setSelection(selStart, selEnd);
+            }
         }
     }
 }

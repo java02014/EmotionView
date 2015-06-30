@@ -16,7 +16,7 @@
             android:orientation="horizontal"
             android:gravity="center"
             android:layout_gravity="bottom"
-            android:layout_marginBottom="10dp"
+            android:layout_marginBottom="15dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
@@ -30,6 +30,7 @@
         android:background="#ff888888"/>
 
     <HorizontalScrollView
+        android:scrollbars="none"
         android:layout_width="match_parent"
         android:layout_height="42dp">
 

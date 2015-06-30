@@ -1,6 +1,7 @@
 package com.nd.android.sdp.im.common.emotion.library;
 
 import android.text.Spannable;
+import android.text.SpannableString;
 import android.text.SpannableStringBuilder;
 import android.util.Pair;
 
@@ -25,15 +26,27 @@ public class EmotionHandlers {
      * @param pDrawableSize the drawable size
      * @author Young
      */
-    public static void addEmotion(IInputView pInputView, Emotion pEmotion, int pTextSize, int pDrawableSize) {
-        final Spannable text = pInputView.getText();
-        SpannableStringBuilder spannableStringBuilder = new SpannableStringBuilder(text);
-        final String append = pEmotion.encode();
+    public static void addEmotion(final IInputView pInputView, final Emotion pEmotion, final int pTextSize, final int pDrawableSize) {
+        final SpannableString append = new SpannableString(pEmotion.encode());
         final int selectionStart = pInputView.getSelectionStart();
         final int length = append.length();
-        spannableStringBuilder.replace(selectionStart, selectionStart, append, 0, length);
-        updateEmotions(spannableStringBuilder, pTextSize, pDrawableSize);
+        final Spannable text = pInputView.getText();
+        SpannableStringBuilder spannableStringBuilder = new SpannableStringBuilder(text);
+        final EmotionConfig configs = EmotionManager.getInstance().getConfigs();
+        if (configs != null) {
+            ArrayList<IDecoder> decoderList = configs.getDecoders();
+            if (decoderList != null) {
+                for (IDecoder decoder : decoderList) {
+                    decoder.decode(append, pDrawableSize, pTextSize);
+                }
+            }
+        }
+        spannableStringBuilder.replace(selectionStart, selectionStart, append);
         pInputView.setText(spannableStringBuilder);
+        if (pInputView.getText().length() != spannableStringBuilder.length()) {
+            // 还原，被裁掉了
+            pInputView.setText(text);
+        }
         pInputView.setSelection(new Pair<>(selectionStart + length, selectionStart + length));
     }
 
@@ -42,7 +55,7 @@ public class EmotionHandlers {
      *
      * @author Young
      */
-    public static void updateEmotions(Spannable pSpannable, int emojiSize, int textSize) {
+    public static void updateEmotions(final Spannable pSpannable, final int emojiSize, final int textSize) {
         int textLength = pSpannable.length();
         EmotionSpan[] oldSpans = pSpannable.getSpans(0, textLength, EmotionSpan.class);
         for (int i = 0; i < oldSpans.length; i++) {

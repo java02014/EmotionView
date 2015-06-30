@@ -5,47 +5,56 @@
                 tools:context="com.nd.android.sdp.im.common.emotion.MainActivity">
 
     <RelativeLayout
-        android:layout_alignParentBottom="true"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true">
 
-    <com.nd.android.sdp.im.common.emotion.library.view.EmotionEditText
-        android:id="@+id/etInput"
-        android:layout_toLeftOf="@+id/btnSend"
-        android:singleLine="true"
-        android:gravity="center_vertical"
-        android:layout_width="match_parent"
-        android:layout_marginTop="10dp"
-        android:layout_height="42dp"/>
+        <com.nd.android.sdp.im.common.emotion.library.view.EmotionEditText
+            android:id="@+id/etInput"
+            android:layout_width="match_parent"
+            android:layout_height="42dp"
+            android:layout_marginTop="10dp"
+            android:maxLength="25"
+            android:layout_toLeftOf="@+id/btnSend"
+            android:gravity="center_vertical"/>
 
-    <Button
-        android:id="@+id/btnSend"
-        android:text="Send"
-        android:onClick="onSend"
-        android:layout_alignParentRight="true"
-        android:layout_width="64dp"
-        android:layout_height="wrap_content"/>
+        <Button
+            android:id="@+id/btnSend"
+            android:layout_width="64dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:onClick="onSend"
+            android:text="Send"/>
 
-    <com.nd.android.sdp.im.common.emotion.library.view.EmotionView
-        android:id="@+id/vEmotion"
-        android:layout_below="@id/etInput"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"></com.nd.android.sdp.im.common.emotion.library.view.EmotionView>
+        <com.nd.android.sdp.im.common.emotion.library.view.EmotionView
+            android:id="@+id/vEmotion"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/etInput"></com.nd.android.sdp.im.common.emotion.library.view.EmotionView>
 
     </RelativeLayout>
 
     <Button
         android:id="@+id/btnDecode"
-        android:text="解码"
-        android:onClick="onDecode"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        android:onClick="onDecode"
+        android:text="解码"/>
 
     <Button
-        android:text="图片解码"
-        android:onClick="onPicDecode"
-        android:layout_below="@id/btnDecode"
+        android:id="@+id/btnPicDecode"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        android:layout_below="@id/btnDecode"
+        android:onClick="onPicDecode"
+        android:text="图片解码"/>
+
+    <Button
+        android:id="@+id/btnDecodeNotification"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/btnPicDecode"
+        android:onClick="onDecodeNotification"
+        android:text="通知栏解码"/>
 
 </RelativeLayout>

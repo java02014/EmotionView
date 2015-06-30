@@ -24,11 +24,7 @@ import com.nd.android.sdp.im.common.emotion.library.bean.Emotion;
 import com.nd.android.sdp.im.common.emotion.library.bean.Group;
 import com.nd.android.sdp.im.common.emotion.library.bean.PicEmotion;
 import com.nd.android.sdp.im.common.emotion.library.parser.DefaultEmotionParser;
-import com.nostra13.universalimageloader.cache.disc.naming.Md5FileNameGenerator;
-import com.nostra13.universalimageloader.cache.memory.impl.WeakMemoryCache;
-import com.nostra13.universalimageloader.core.ImageLoader;
-import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
-import com.nostra13.universalimageloader.core.assist.QueueProcessingType;
+import com.nd.android.sdp.im.common.emotion.library.utils.EmotionImageLoader;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -71,16 +67,6 @@ public class EmotionView extends LinearLayout implements OnItemClickListener, Co
      */
     public EmotionView(Context context, AttributeSet attrs) {
         super(context, attrs);
-        if (!ImageLoader.getInstance().isInited() && !isInEditMode()) {
-            ImageLoaderConfiguration config = new ImageLoaderConfiguration
-                    .Builder(context)
-                    .threadPriority(Thread.NORM_PRIORITY - 2)
-                    .denyCacheImageMultipleSizesInMemory()
-                    .discCacheFileNameGenerator(new Md5FileNameGenerator())
-                    .memoryCache(new WeakMemoryCache())
-                    .tasksProcessingOrder(QueueProcessingType.LIFO).build();
-            ImageLoader.getInstance().init(config);
-        }
         mContext = context;
         setOrientation(VERTICAL);
         inflate(context, R.layout.emtioin_view, this);
@@ -169,13 +155,15 @@ public class EmotionView extends LinearLayout implements OnItemClickListener, Co
         mRbGroup.removeAllViews();
         final PagerAdapter adapter = mVpEmotion.getAdapter();
         final int count = adapter.getCount();
+        final int padding = dp2Px(mContext, 3);
+        final int size = dp2Px(mContext, 10);
         for (int i = 0; i < count; i++) {
             RadioButton radioButton = new RadioButton(mContext);
             radioButton.setOnCheckedChangeListener(this);
             radioButton.setButtonDrawable(R.drawable.emotion_view_dot);
-            final RadioGroup.LayoutParams params = new RadioGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-            params.rightMargin = 10;
-            params.leftMargin = 10;
+            final RadioGroup.LayoutParams params = new RadioGroup.LayoutParams(size, size);
+            params.rightMargin = padding;
+            params.leftMargin = padding;
             mRbGroup.addView(radioButton, params);
         }
         final int currentItem = mVpEmotion.getCurrentItem();
@@ -188,6 +176,12 @@ public class EmotionView extends LinearLayout implements OnItemClickListener, Co
             ((RadioButton) rb).setChecked(true);
         }
     }
+
+    public static int dp2Px(Context context, float dp) {
+        final float scale = context.getResources().getDisplayMetrics().density;
+        return (int) (dp * scale + 0.5f);
+    }
+
 
     /**
      * 初始化表情分组列表
@@ -204,10 +198,10 @@ public class EmotionView extends LinearLayout implements OnItemClickListener, Co
             mLlGroup.addView(imageView, layoutParams);
             int pressed = android.R.attr.state_pressed;
             final Group emotionGroup = mEmotionGroups.get(id);
-            final Bitmap normalBitmap = ImageLoader.getInstance().loadImageSync(emotionGroup.getNormalImg());
+            final Bitmap normalBitmap = EmotionImageLoader.getInstance().loadImageSync(emotionGroup.getNormalImg());
             BitmapDrawable normalDrawable = new BitmapDrawable(normalBitmap);
             mToRecycleBitmap.add(normalBitmap);
-            final Bitmap pressedBitmap = ImageLoader.getInstance().loadImageSync(emotionGroup.getSelecteddImg());
+            final Bitmap pressedBitmap = EmotionImageLoader.getInstance().loadImageSync(emotionGroup.getSelecteddImg());
             BitmapDrawable pressedDrawable = new BitmapDrawable(pressedBitmap);
             StateListDrawable stateListDrawable = new StateListDrawable();
             mToRecycleBitmap.add(pressedBitmap);

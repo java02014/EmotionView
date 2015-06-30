@@ -1,6 +1,7 @@
 package com.nd.android.sdp.im.common.emotion.library.bean;
 
 import android.content.Context;
+import android.widget.ImageView;
 
 import com.nd.android.sdp.im.common.emotion.library.encode.IEncoder;
 import com.nd.android.sdp.im.common.emotion.library.stragedy.files.IFileStragedy;
@@ -21,6 +22,11 @@ public class PicEmotion extends Emotion {
 
     @Override
     public void click(Context pContext, IInputView pInputView) {
+
+    }
+
+    @Override
+    public void setHistorymageViewProperty(ImageView pEmotionView) {
 
     }
 }

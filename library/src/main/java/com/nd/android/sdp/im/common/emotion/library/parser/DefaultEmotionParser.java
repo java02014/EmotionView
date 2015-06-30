@@ -8,7 +8,7 @@ import com.nd.android.sdp.im.common.emotion.library.bean.EmojiGroup;
 import com.nd.android.sdp.im.common.emotion.library.bean.Emotion;
 import com.nd.android.sdp.im.common.emotion.library.bean.Group;
 import com.nd.android.sdp.im.common.emotion.library.bean.PicGroup;
-import com.nd.android.sdp.im.common.emotion.library.bean.SysGroup;
+import com.nd.android.sdp.im.common.emotion.library.bean.TextPicGroup;
 import com.nd.android.sdp.im.common.emotion.library.stragedy.configs.IConfigFileStragedy;
 import com.nd.android.sdp.im.common.emotion.library.stragedy.files.IFileStragedy;
 import com.nd.android.sdp.im.common.emotion.library.utils.EmotionTypeUtils;
@@ -19,6 +19,7 @@ import org.xmlpull.v1.XmlPullParserException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.Locale;
 
 /**
  * 默认解析器
@@ -51,25 +52,24 @@ public class DefaultEmotionParser implements IEmotionParser {
             XmlPullParser xrp = Xml.newPullParser();
             xrp.setInput(inputStream, "UTF-8");
             Group group = null;
+            Emotion lastEmotion = null;
             ArrayList<Emotion> emotionArrayList = new ArrayList<Emotion>();
             while (xrp.getEventType() != XmlPullParser.END_DOCUMENT) {
                 if (xrp.getEventType() == XmlResourceParser.START_TAG) {
                     String tagName = xrp.getName();
                     if (tagName.equals("group")) {
-                        final String id = xrp.getAttributeValue(null, "id");
-                        if (id.equals(SYS_TAG)) {
-                            group = new SysGroup(fileStragedy);
-                            group.setId("sys");
-                        } else if (id.equals("e")) {
+                        final String type = xrp.getAttributeValue(null, "type");
+                        if (EmotionTypeUtils.TEXT_PIC_STR.equals(type)) {
+                            group = new TextPicGroup(fileStragedy);
+                        } else if (EmotionTypeUtils.EMOJI_STR.equals(type)) {
                             group = new EmojiGroup(fileStragedy);
-                            group.setId("e");
                         } else {
                             group = new PicGroup(fileStragedy);
-                            group.setId(xrp.getAttributeValue(null, "id"));
                         }
+                        final String id = xrp.getAttributeValue(null, "id");
+                        group.setId(id);
                         group.setNormalImg(xrp.getAttributeValue(null, "normal_img"));
                         group.setSelecteddImg(xrp.getAttributeValue(null, "selected_img"));
-                        final String type = xrp.getAttributeValue(null, "type");
                         group.setType(EmotionTypeUtils.strToInt(type));
                         group.setExt(xrp.getAttributeValue(null, "ext"));
                         group.setThumbExt("png");
@@ -85,6 +85,15 @@ public class DefaultEmotionParser implements IEmotionParser {
                         emotion.setExt(group.getExt());
                         emotion.setThumbExt("png");
                         emotionArrayList.add(emotion);
+                        lastEmotion = emotion;
+                    } else if (tagName.equalsIgnoreCase("def")) {
+                        lastEmotion.putLangText(Locale.CHINA.getLanguage(), xrp.nextText().trim());
+                    } else if (tagName.equalsIgnoreCase("cn")) {
+                        lastEmotion.putLangText(Locale.CHINA.getLanguage(), xrp.nextText().trim());
+                    } else if (tagName.equalsIgnoreCase("tw")) {
+                        lastEmotion.putLangText(Locale.TAIWAN.getLanguage(), xrp.nextText().trim());
+                    } else if (tagName.equalsIgnoreCase("en")) {
+                        lastEmotion.putLangText(Locale.ENGLISH.getLanguage(), xrp.nextText().trim());
                     }
                 }
                 xrp.next();

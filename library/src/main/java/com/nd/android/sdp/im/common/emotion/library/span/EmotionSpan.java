@@ -8,7 +8,8 @@ import android.graphics.drawable.Drawable;
 import android.text.style.DynamicDrawableSpan;
 
 import com.nd.android.sdp.im.common.emotion.library.bean.Emotion;
-import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nd.android.sdp.im.common.emotion.library.utils.EmotionImageLoader;
+import com.nostra13.universalimageloader.core.DisplayImageOptions;
 
 import java.lang.ref.WeakReference;
 
@@ -16,6 +17,10 @@ import java.lang.ref.WeakReference;
  * Created by Young on 2015/4/27.
  */
 public class EmotionSpan extends DynamicDrawableSpan {
+
+    private static DisplayImageOptions sOptions = new DisplayImageOptions.Builder()
+            .cacheInMemory(true)
+            .build();
 
     private final Emotion mEmotion;
     private final int mSize;
@@ -29,7 +34,7 @@ public class EmotionSpan extends DynamicDrawableSpan {
     public EmotionSpan(Emotion pEmotion, int pSize, int pTextSize) {
         super(DynamicDrawableSpan.ALIGN_BASELINE);
         mEmotion = pEmotion;
-        mWidth = mHeight = mSize = pSize;
+        mWidth = mHeight = mSize = pSize + 8;
         mTextSize = pTextSize;
     }
 
@@ -43,10 +48,23 @@ public class EmotionSpan extends DynamicDrawableSpan {
     }
 
     @Override
+    public int getSize(Paint paint, CharSequence text, int start, int end, Paint.FontMetricsInt fm) {
+        if (fm != null) {
+            fm.ascent = -mSize;
+            fm.descent = 0;
+
+            fm.top = fm.ascent;
+            fm.bottom = 0;
+        }
+
+        return mSize;
+    }
+
+    @Override
     public Drawable getDrawable() {
         if (mDrawable == null) {
             try {
-                final Bitmap bitmap = ImageLoader.getInstance().loadImageSync(mEmotion.getThumbFileName());
+                final Bitmap bitmap = EmotionImageLoader.getInstance().loadImageSync(mEmotion.getThumbFileName(), sOptions);
                 mHeight = mSize;
                 mWidth = mHeight * bitmap.getWidth() / bitmap.getHeight();
                 mTop = (mTextSize - mHeight) / 2;
@@ -65,7 +83,6 @@ public class EmotionSpan extends DynamicDrawableSpan {
         Drawable b = getCachedDrawable();
         canvas.save();
 
-
         int transY = bottom - b.getBounds().bottom;
         if (mVerticalAlignment == ALIGN_BASELINE) {
             transY = top + ((bottom - top) / 2) - ((b.getBounds().bottom - b.getBounds().top) / 2) - mTop;
@@ -78,7 +95,11 @@ public class EmotionSpan extends DynamicDrawableSpan {
 
 
     private Drawable getCachedDrawable() {
-        if (mDrawableRef == null || mDrawableRef.get() == null) {
+        if (mDrawableRef == null
+                || mDrawableRef.get() == null
+                || (((BitmapDrawable) mDrawableRef.get()).getBitmap()) == null
+                || (((BitmapDrawable) mDrawableRef.get()).getBitmap()).isRecycled()) {
+            mDrawable = null;
             mDrawableRef = new WeakReference<Drawable>(getDrawable());
         }
         return mDrawableRef.get();

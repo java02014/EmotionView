@@ -1,7 +1,6 @@
 package com.nd.android.sdp.im.common.emotion.library.view;
 
 import android.content.Context;
-import android.text.Spannable;
 import android.util.AttributeSet;
 import android.util.Pair;
 import android.view.KeyEvent;
@@ -12,7 +11,7 @@ import com.nd.android.sdp.im.common.emotion.library.EmotionHandlers;
 import com.nd.android.sdp.im.common.emotion.library.utils.CopyCompbat;
 
 /**
- * Created by Young on 2015/4/23.
+ * EditText默认实现
  */
 public class EmotionEditText extends EditText implements IInputView {
 
@@ -31,19 +30,34 @@ public class EmotionEditText extends EditText implements IInputView {
 
     @Override
     public void setSelection(Pair<Integer, Integer> pSelectionPair) {
-        setSelection(pSelectionPair.first, pSelectionPair.second);
+        try {
+            setSelection(pSelectionPair.first, pSelectionPair.second);
+        } catch (IndexOutOfBoundsException e) {
+            setSelection(getText().toString().length());
+        }
     }
 
     @Override
-    protected void onTextChanged(CharSequence text, int start, int lengthBefore, int lengthAfter) {
-        super.onTextChanged(text, start, lengthBefore, lengthAfter);
-        EmotionHandlers.updateEmotions((Spannable) text, (int) getTextSize(), (int) getTextSize());
+    public boolean onTextContextMenuItem(int id) {
+        boolean consumed = super.onTextContextMenuItem(id);
+        switch (id) {
+            case android.R.id.paste:
+                EmotionHandlers.updateEmotions(getEditableText(), (int) getTextSize(), (int) getTextSize());
+                break;
+        }
+        return consumed;
     }
 
     @Override
     @ViewDebug.ExportedProperty(category = "text")
     public int getSelectionEnd() {
         return CopyCompbat.getSelectionEndCompbat(this);
+    }
+
+    @Override
+    protected void onSelectionChanged(int selStart, int selEnd) {
+        super.onSelectionChanged(selStart, selEnd);
+        CopyCompbat.onSelectionChangeCombat(this, selStart, selEnd);
     }
 
 }

@@ -1,5 +1,6 @@
 package com.nd.android.sdp.im.common.emotion.library.decode;
 
+import android.content.Context;
 import android.text.Spannable;
 
 /**
@@ -19,5 +20,14 @@ public interface IDecoder {
      * @author Young
      */
     Spannable decode(Spannable text, int pEmojiSize, int pTextSize);
+
+    /**
+     * 解析成普通文本，如:[高兴]
+     *
+     * @param pContext
+     * @param text
+     * @return
+     */
+    String decodeToText(Context pContext, String text);
 
 }

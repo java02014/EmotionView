@@ -5,9 +5,9 @@ import com.nd.android.sdp.im.common.emotion.library.stragedy.files.IFileStragedy
 /**
  * Created by Young on 2015/4/23.
  */
-public class SysGroup extends Group {
+public class TextPicGroup extends Group {
 
-    public SysGroup(IFileStragedy pFileStragedy) {
+    public TextPicGroup(IFileStragedy pFileStragedy) {
         super(pFileStragedy);
     }
 

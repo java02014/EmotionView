@@ -11,9 +11,9 @@ import android.widget.TableRow;
 
 import com.nd.android.sdp.im.common.emotion.library.R;
 import com.nd.android.sdp.im.common.emotion.library.stragedy.files.IFileStragedy;
+import com.nd.android.sdp.im.common.emotion.library.utils.EmotionImageLoader;
 import com.nd.android.sdp.im.common.emotion.library.view.OnItemClickListener;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
-import com.nostra13.universalimageloader.core.ImageLoader;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -188,7 +188,7 @@ public abstract class Group implements IGroup, View.OnClickListener {
                 final LinearLayout inflate = (LinearLayout) inflater.inflate(R.layout.emotion_view_item_emotion, null);
                 final ImageView emotionView = (ImageView) inflate.getChildAt(0);
                 final Emotion emotion = getEmotion(pPosition, i * getColumn() + j);
-                ImageLoader.getInstance().displayImage(emotion.getThumbFileName(), emotionView, sDisplayImageOptions);
+                EmotionImageLoader.getInstance().displayImage(emotion.getThumbFileName(), emotionView, sDisplayImageOptions);
                 inflate.setOnClickListener(this);
                 tableRow.addView(inflate);
                 final TableRow.LayoutParams layoutParams = (TableRow.LayoutParams) inflate.getLayoutParams();

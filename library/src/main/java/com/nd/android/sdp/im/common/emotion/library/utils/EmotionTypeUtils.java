@@ -9,9 +9,9 @@ import com.nd.android.sdp.im.common.emotion.library.bean.Group;
  */
 public class EmotionTypeUtils {
 
-    private static final String TEXT_PIC_STR = "TEXT_PIC";
-    private static final String PIC_STR = "PIC";
-    private static final String EMOJI_STR = "EMOJI";
+    public static final String TEXT_PIC_STR = "TEXT_PIC";
+    public static final String PIC_STR = "PIC";
+    public static final String EMOJI_STR = "EMOJI";
 
     public static final int TEXT_PIC = 2;
     public static final int EMOJI = 4;

@@ -1,6 +1,7 @@
 package com.nd.android.sdp.im.common.emotion.library.bean;
 
 import android.content.Context;
+import android.widget.ImageView;
 
 import com.nd.android.sdp.im.common.emotion.library.EmotionHandlers;
 import com.nd.android.sdp.im.common.emotion.library.EmotionRecentsManager;
@@ -9,10 +10,13 @@ import com.nd.android.sdp.im.common.emotion.library.encode.Encoder;
 import com.nd.android.sdp.im.common.emotion.library.encode.IEncoder;
 import com.nd.android.sdp.im.common.emotion.library.stragedy.files.IFileStragedy;
 import com.nd.android.sdp.im.common.emotion.library.utils.ObjectSerializer;
+import com.nd.android.sdp.im.common.emotion.library.view.EmotionView;
 import com.nd.android.sdp.im.common.emotion.library.view.IInputView;
 
 import java.io.IOException;
 import java.io.Serializable;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * 表情
@@ -49,6 +53,8 @@ public class Emotion implements Serializable {
      * 缩略图后缀
      */
     private String mThumbExt;
+
+    private Map<String, String> mLangText = new HashMap<String, String>();
 
     protected Emotion(IFileStragedy pFileStragedy, IEncoder pEncoder) {
         mFileStragedy = pFileStragedy;
@@ -178,4 +184,31 @@ public class Emotion implements Serializable {
         EmotionRecentsManager.getInstance(pContext).push(this);
     }
 
+    /**
+     * 设置历史表情大小
+     *
+     * @param pEmotionView
+     */
+    public void setHistorymageViewProperty(ImageView pEmotionView) {
+        final int padding = EmotionView.dp2Px(pEmotionView.getContext(), 12);
+        pEmotionView.setPadding(padding, padding, padding, padding);
+    }
+
+    /**
+     * 设置显示语言文本
+     *
+     * @param lang
+     * @param text
+     */
+    public void putLangText(String lang, String text) {
+        mLangText.put(lang, text);
+    }
+
+    /**
+     * 获取语言文本
+     * @param lang
+     */
+    public String getLangText(String lang){
+        return mLangText.get(lang);
+    }
 }

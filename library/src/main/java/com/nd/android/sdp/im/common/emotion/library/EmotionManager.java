@@ -2,6 +2,7 @@ package com.nd.android.sdp.im.common.emotion.library;
 
 import android.content.Context;
 import android.text.Spannable;
+import android.text.SpannableString;
 import android.text.SpannableStringBuilder;
 
 import com.nd.android.sdp.im.common.emotion.library.bean.Group;
@@ -17,7 +18,12 @@ import com.nd.android.sdp.im.common.emotion.library.getter.IEmotionGetter;
 import com.nd.android.sdp.im.common.emotion.library.getter.SdcardEmotionGetter;
 import com.nd.android.sdp.im.common.emotion.library.stragedy.AssetsStragedyFactory;
 import com.nd.android.sdp.im.common.emotion.library.stragedy.IAssetsStragedyFactory;
+import com.nd.android.sdp.im.common.emotion.library.utils.EmotionImageLoader;
 import com.nd.android.sdp.im.common.emotion.library.utils.EmotionTypeUtils;
+import com.nostra13.universalimageloader.cache.disc.naming.Md5FileNameGenerator;
+import com.nostra13.universalimageloader.cache.memory.impl.WeakMemoryCache;
+import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
+import com.nostra13.universalimageloader.core.assist.QueueProcessingType;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -37,7 +43,7 @@ public class EmotionManager {
     private EmotionConfig mEmotionConfig;
     private IAssetsStragedyFactory mAssetsStragedyFactory;
 
-    public EmotionManager() {
+    private EmotionManager() {
     }
 
     /**
@@ -60,17 +66,6 @@ public class EmotionManager {
 
     public LinkedHashMap<String, Group> getGroups() {
         return mGroups;
-    }
-
-    /**
-     * 初始化模块
-     *
-     * @param pEmotionConfig the emotion config
-     * @author Young
-     */
-    public void init(EmotionConfig pEmotionConfig) {
-        mEmotionConfig = pEmotionConfig;
-        checkConfig();
     }
 
     private void checkConfig() {
@@ -97,6 +92,16 @@ public class EmotionManager {
      */
     public void initData(Context pContext) {
         checkConfig();
+        if (!EmotionImageLoader.getInstance().isInited()) {
+            ImageLoaderConfiguration config = new ImageLoaderConfiguration
+                    .Builder(pContext)
+                    .threadPriority(Thread.NORM_PRIORITY - 2)
+                    .denyCacheImageMultipleSizesInMemory()
+                    .discCacheFileNameGenerator(new Md5FileNameGenerator())
+                    .memoryCache(new WeakMemoryCache())
+                    .tasksProcessingOrder(QueueProcessingType.LIFO).build();
+            EmotionImageLoader.getInstance().init(config);
+        }
         if (mGroups.isEmpty()) {
             refreshData(pContext);
         }
@@ -152,7 +157,27 @@ public class EmotionManager {
         for (IDecoder decoder : decoders) {
             decoder.decode(spannable, pTextSize, pDrawableSize);
         }
-        return spannable;
+        return SpannableString.valueOf(spannable);
+    }
+
+    /**
+     * 解析成普通文本
+     *
+     * @param text
+     * @return
+     */
+    public String decodeToText(Context pContext, String text) {
+        checkConfig();
+        if (mGroups == null) {
+            // TODO 外头需要等待
+            return null;
+        }
+        String result = text;
+        final ArrayList<IDecoder> decoders = mEmotionConfig.getDecoders();
+        for (IDecoder decoder : decoders) {
+            result = decoder.decodeToText(pContext, result);
+        }
+        return result;
     }
 
     /**

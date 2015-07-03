@@ -1,6 +1,5 @@
 <resources>
-    <string name="app_name">Library</string>
-    <string name="emotion_view_get_config_error">表情配置读取错误</string>
-    <string name="emotion_view_no_history">暂无历史表情</string>
-    <string name="emotion_unknown">表情</string>
+    <string name="emotion_view_get_config_error">Emoticon configuration error.</string>
+    <string name="emotion_view_no_history">No history emoticon.</string>
+    <string name="emotion_unknown">Emoticon</string>
 </resources>

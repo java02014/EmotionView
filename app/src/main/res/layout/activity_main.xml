@@ -14,7 +14,6 @@
             android:layout_width="match_parent"
             android:layout_height="42dp"
             android:layout_marginTop="10dp"
-            android:maxLength="25"
             android:layout_toLeftOf="@+id/btnSend"
             android:gravity="center_vertical"/>
 

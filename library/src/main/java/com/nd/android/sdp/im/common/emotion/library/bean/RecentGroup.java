@@ -51,7 +51,7 @@ public class RecentGroup extends PicGroup {
     }
 
     @Override
-    public View getGridView(Context pContext, int pPosition) {
+    public View getGridView(Context pContext, int pPosition, View.OnClickListener pOnClickListener) {
         final LayoutInflater inflater = LayoutInflater.from(pContext);
         FrameLayout view = (FrameLayout) inflater.inflate(R.layout.pager_emotion, null);
         TableLayout tableLayout = (TableLayout) view.getChildAt(0);
@@ -69,7 +69,7 @@ public class RecentGroup extends PicGroup {
                     emotionView.setScaleType(ImageView.ScaleType.FIT_CENTER);
                     emotion.setHistorymageViewProperty(emotionView);
                     EmotionImageLoader.getInstance().displayImage(emotion.getThumbFileName(), emotionView, sDisplayImageOptions);
-                    inflate.setOnClickListener(this);
+                    inflate.setOnClickListener(pOnClickListener);
                     tableRow.addView(inflate);
                     final TableRow.LayoutParams layoutParams = (TableRow.LayoutParams) inflate.getLayoutParams();
                     layoutParams.width = screenWidht / getColumn();

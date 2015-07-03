@@ -15,19 +15,22 @@ public class EmotionPagerAdapter extends PagerAdapter {
 
     private final Context mContext;
     private IGroup mGroup;
+    private View.OnClickListener mOnItemClickListener;
 
     /**
      * 初始化
      *
-     * @param pContext 上下文
-     * @param pGroup   分组
+     * @param pContext         上下文
+     * @param pGroup           分组
+     * @param pOnClickListener 表情点击事件（TAG为表情）
      */
-    public EmotionPagerAdapter(Context pContext, IGroup pGroup) {
+    public EmotionPagerAdapter(Context pContext, IGroup pGroup, View.OnClickListener pOnClickListener) {
         mContext = pContext;
         mGroup = pGroup;
         if (mGroup instanceof RecentGroup) {
             ((RecentGroup) mGroup).refresh(pContext);
         }
+        mOnItemClickListener = pOnClickListener;
     }
 
     @Override
@@ -43,7 +46,7 @@ public class EmotionPagerAdapter extends PagerAdapter {
 
     @Override
     public Object instantiateItem(ViewGroup container, int position) {
-        View view = mGroup.getGridView(mContext, position);
+        View view = mGroup.getGridView(mContext, position, mOnItemClickListener);
         container.addView(view);
         return view;
     }
@@ -52,4 +55,5 @@ public class EmotionPagerAdapter extends PagerAdapter {
     public void destroyItem(ViewGroup container, int position, Object object) {
         container.removeView((View) object);
     }
+
 }

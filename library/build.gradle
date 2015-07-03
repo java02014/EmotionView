@@ -44,7 +44,7 @@ afterEvaluate { project ->
                 repository(url: "http://nexus.sdp.nd/nexus/content/repositories/android-3rd/") {
                     authentication(userName: mavenUser, password: mavenPassword)
                 }
-                pom.version = "0.1.20"
+                pom.version = "0.1.26"
                 pom.artifactId = "emotion"
                 pom.groupId = "com.nd.android.sdp.im.common.widget"
             }
@@ -53,7 +53,7 @@ afterEvaluate { project ->
 }
 
 group = 'com.young.android.EmotionView'
-version = '1.0.1'
+version = '1.1.0'
 
 bintray {
     user = bintrayUser

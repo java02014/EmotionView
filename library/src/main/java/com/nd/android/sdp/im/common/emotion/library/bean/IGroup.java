@@ -3,8 +3,6 @@ package com.nd.android.sdp.im.common.emotion.library.bean;
 import android.content.Context;
 import android.view.View;
 
-import com.nd.android.sdp.im.common.emotion.library.view.OnItemClickListener;
-
 /**
  * Created by Young on 2015/4/23.
  *
@@ -57,12 +55,6 @@ public interface IGroup {
      * @param pPosition
      * @return the grid view
      */
-    View getGridView(Context pContext, int pPosition);
+    View getGridView(Context pContext, int pPosition, View.OnClickListener pOnClickListener);
 
-    /**
-     * Sets listener.
-     *
-     * @param pOnItemClickListener the p on item click listener
-     */
-    void setListener(OnItemClickListener pOnItemClickListener);
 }

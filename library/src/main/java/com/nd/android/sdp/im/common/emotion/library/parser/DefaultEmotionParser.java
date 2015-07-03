@@ -87,7 +87,7 @@ public class DefaultEmotionParser implements IEmotionParser {
                         emotionArrayList.add(emotion);
                         lastEmotion = emotion;
                     } else if (tagName.equalsIgnoreCase("def")) {
-                        lastEmotion.putLangText(Locale.CHINA.getLanguage(), xrp.nextText().trim());
+                        lastEmotion.putLangText(Locale.ENGLISH.getLanguage(), xrp.nextText().trim());
                     } else if (tagName.equalsIgnoreCase("cn")) {
                         lastEmotion.putLangText(Locale.CHINA.getLanguage(), xrp.nextText().trim());
                     } else if (tagName.equalsIgnoreCase("tw")) {

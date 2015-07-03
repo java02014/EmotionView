@@ -1,5 +1,6 @@
 package com.nd.android.sdp.im.common.emotion;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
@@ -52,6 +53,11 @@ public class MainActivity extends ActionBarActivity {
             return true;
         }
 
+        if (id == R.id.action_second) {
+            startActivity(new Intent(this, MainActivity.class));
+            return true;
+        }
+
         return super.onOptionsItemSelected(item);
     }
 
@@ -68,5 +74,9 @@ public class MainActivity extends ActionBarActivity {
         Log.e("TEST", EmotionManager.getInstance().decodePic("[cat:281]"));
         Log.e("TEST", EmotionManager.getInstance().decodePic("[sdcard:1006]"));
         Log.e("TEST", EmotionManager.getInstance().decodePic("[content:1714297]"));
+    }
+
+    public void onDecodeNotification(View view) {
+        Log.e("TEST", EmotionManager.getInstance().decodeToText(this, "[sys:1001]"));
     }
 }

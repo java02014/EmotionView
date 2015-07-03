@@ -1,6 +1,7 @@
 package com.nd.android.sdp.im.common.emotion.library.bean;
 
 import android.content.Context;
+import android.text.TextUtils;
 import android.widget.ImageView;
 
 import com.nd.android.sdp.im.common.emotion.library.EmotionHandlers;
@@ -16,6 +17,7 @@ import com.nd.android.sdp.im.common.emotion.library.view.IInputView;
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 
 /**
@@ -209,6 +211,10 @@ public class Emotion implements Serializable {
      * @param lang
      */
     public String getLangText(String lang){
-        return mLangText.get(lang);
+        String decode = mLangText.get(lang);
+        if (TextUtils.isEmpty(decode)) {
+            decode = mLangText.get(Locale.ENGLISH.getLanguage());
+        }
+        return decode;
     }
 }

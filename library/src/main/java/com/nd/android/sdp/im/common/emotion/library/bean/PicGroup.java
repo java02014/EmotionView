@@ -47,7 +47,7 @@ public class PicGroup extends Group {
     }
 
     @Override
-    public View getGridView(Context pContext, int pPosition) {
+    public View getGridView(Context pContext, int pPosition, View.OnClickListener pOnClickListener) {
         final LayoutInflater inflater = LayoutInflater.from(pContext);
         FrameLayout view = (FrameLayout) inflater.inflate(R.layout.pager_emotion, null);
         TableLayout tableLayout = (TableLayout) view.getChildAt(0);
@@ -62,7 +62,7 @@ public class PicGroup extends Group {
                 final ImageView emotionView = (ImageView) inflate.getChildAt(0);
                 final Emotion emotion = getEmotion(pPosition, i * getColumn() + j);
                 EmotionImageLoader.getInstance().displayImage(emotion.getThumbFileName(), emotionView, sDisplayImageOptions);
-                inflate.setOnClickListener(this);
+                inflate.setOnClickListener(pOnClickListener);
                 tableRow.addView(inflate);
                 final TableRow.LayoutParams layoutParams = (TableRow.LayoutParams) inflate.getLayoutParams();
                 layoutParams.width = screenWidht / getColumn();

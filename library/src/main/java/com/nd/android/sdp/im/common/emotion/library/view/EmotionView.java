@@ -33,6 +33,7 @@ import java.util.Map;
 
 import rx.Observable;
 import rx.Subscriber;
+import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action0;
 import rx.functions.Action1;
@@ -44,7 +45,7 @@ import rx.schedulers.Schedulers;
  *
  * @author Young
  */
-public class EmotionView extends LinearLayout implements OnItemClickListener, CompoundButton.OnCheckedChangeListener, ViewPager.OnPageChangeListener {
+public class EmotionView extends LinearLayout implements CompoundButton.OnCheckedChangeListener, ViewPager.OnPageChangeListener {
 
     private static final int GROUP_WEIGHT_SUM = 5;
     private final RadioGroup mRbGroup;
@@ -58,6 +59,7 @@ public class EmotionView extends LinearLayout implements OnItemClickListener, Co
     private List<Bitmap> mToRecycleBitmap = new ArrayList<Bitmap>();
     private Map<String, Group> mEmotionGroups;
     private IInputView mInputView;
+    private Subscription mSubscription;
 
     /**
      * 构造表情控件
@@ -92,7 +94,7 @@ public class EmotionView extends LinearLayout implements OnItemClickListener, Co
     public void init(final int pEmotionTypes, IEmotionEvent pEmotionEvent, IInputView pInputView) {
         mInputView = pInputView;
         mEmotionEvent = pEmotionEvent;
-        Observable.create(new Observable.OnSubscribe<Object>() {
+        mSubscription = Observable.create(new Observable.OnSubscribe<Object>() {
             @Override
             public void call(Subscriber<? super Object> pSubscriber) {
                 EmotionManager.getInstance().initData(mContext);
@@ -102,6 +104,7 @@ public class EmotionView extends LinearLayout implements OnItemClickListener, Co
                 } else {
                     pSubscriber.onError(new Throwable(mContext.getString(R.string.emotion_view_get_config_error)));
                 }
+                pSubscriber.onCompleted();
             }
         }).filter(new Func1<Object, Boolean>() {
             @Override
@@ -120,7 +123,7 @@ public class EmotionView extends LinearLayout implements OnItemClickListener, Co
                             final Iterator<Group> iterator = mEmotionGroups.values().iterator();
                             defaultGroup = iterator.next();
                         }
-                        mVpEmotion.setAdapter(new EmotionPagerAdapter(mContext, defaultGroup));
+                        mVpEmotion.setAdapter(new EmotionPagerAdapter(mContext, defaultGroup, new OnEmotionClick()));
                         // 获取到表情
                         EmotionView.this.initGroupBtn();
                         EmotionView.this.initDot();
@@ -215,8 +218,6 @@ public class EmotionView extends LinearLayout implements OnItemClickListener, Co
             imageView.setOnClickListener(mOnGroupClick);
             imageView.setBackgroundResource(R.drawable.emotion_view_bg_group);
             imageView.setTag(id);
-
-            emotionGroup.setListener(this);
         }
     }
 
@@ -224,7 +225,7 @@ public class EmotionView extends LinearLayout implements OnItemClickListener, Co
         @Override
         public void onClick(View v) {
             final Group group = mEmotionGroups.get(v.getTag());
-            mVpEmotion.setAdapter(new EmotionPagerAdapter(mContext, group));
+            mVpEmotion.setAdapter(new EmotionPagerAdapter(mContext, group, new OnEmotionClick()));
             EmotionView.this.initDot();
             final int childCount = mLlGroup.getChildCount();
             for (int i = 0; i < childCount; i++) {
@@ -243,17 +244,9 @@ public class EmotionView extends LinearLayout implements OnItemClickListener, Co
                 bitmap.recycle();
             }
         }
-    }
 
-    @Override
-    public void onItemClick(Emotion pEmotion) {
-        if ((pEmotion instanceof PicEmotion)) {
-            if (mEmotionEvent != null) {
-                mEmotionEvent.onEmotionSend(pEmotion.encode());
-            }
-            EmotionRecentsManager.getInstance(mContext).push(pEmotion);
-        } else {
-            pEmotion.click(mContext, mInputView);
+        if (mSubscription != null) {
+            mSubscription.unsubscribe();
         }
     }
 
@@ -264,6 +257,8 @@ public class EmotionView extends LinearLayout implements OnItemClickListener, Co
             mVpEmotion.setCurrentItem(indexOfChild);
         }
     }
+
+
 
     @Override
     public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
@@ -278,5 +273,20 @@ public class EmotionView extends LinearLayout implements OnItemClickListener, Co
     @Override
     public void onPageScrollStateChanged(int state) {
 
+    }
+
+    private class OnEmotionClick implements OnClickListener {
+        @Override
+        public void onClick(View v) {
+            final Emotion emotion = (Emotion) v.getTag();
+            if ((emotion instanceof PicEmotion)) {
+                if (mEmotionEvent != null) {
+                    mEmotionEvent.onEmotionSend(emotion.encode());
+                }
+                EmotionRecentsManager.getInstance(mContext).push(emotion);
+            } else {
+                emotion.click(mContext, mInputView);
+            }
+        }
     }
 }

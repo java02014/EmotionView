@@ -12,7 +12,6 @@ import android.widget.TableRow;
 import com.nd.android.sdp.im.common.emotion.library.R;
 import com.nd.android.sdp.im.common.emotion.library.stragedy.files.IFileStragedy;
 import com.nd.android.sdp.im.common.emotion.library.utils.EmotionImageLoader;
-import com.nd.android.sdp.im.common.emotion.library.view.OnItemClickListener;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 
 import java.util.HashMap;
@@ -23,7 +22,7 @@ import java.util.Map;
  *
  * @author Young
  */
-public abstract class Group implements IGroup, View.OnClickListener {
+public abstract class Group implements IGroup {
 
     protected static DisplayImageOptions sDisplayImageOptions = new DisplayImageOptions.Builder()
             .cacheInMemory(true)
@@ -39,7 +38,6 @@ public abstract class Group implements IGroup, View.OnClickListener {
      * 表情数组
      */
     protected Emotion[] mEmotionArrays;
-    private OnItemClickListener mOnItemClickListener;
     /**
      * ID
      */
@@ -174,7 +172,7 @@ public abstract class Group implements IGroup, View.OnClickListener {
     }
 
     @Override
-    public View getGridView(Context pContext, int pPosition) {
+    public View getGridView(Context pContext, int pPosition, View.OnClickListener pOnClickListener) {
         final LayoutInflater inflater = LayoutInflater.from(pContext);
         FrameLayout view = (FrameLayout) inflater.inflate(R.layout.pager_emotion, null);
         TableLayout tableLayout = (TableLayout) view.getChildAt(0);
@@ -189,7 +187,7 @@ public abstract class Group implements IGroup, View.OnClickListener {
                 final ImageView emotionView = (ImageView) inflate.getChildAt(0);
                 final Emotion emotion = getEmotion(pPosition, i * getColumn() + j);
                 EmotionImageLoader.getInstance().displayImage(emotion.getThumbFileName(), emotionView, sDisplayImageOptions);
-                inflate.setOnClickListener(this);
+                inflate.setOnClickListener(pOnClickListener);
                 tableRow.addView(inflate);
                 final TableRow.LayoutParams layoutParams = (TableRow.LayoutParams) inflate.getLayoutParams();
                 layoutParams.width = screenWidht / getColumn();
@@ -199,19 +197,6 @@ public abstract class Group implements IGroup, View.OnClickListener {
             tableLayout.addView(tableRow);
         }
         return view;
-    }
-
-    @Override
-    public void setListener(OnItemClickListener pOnItemClickListener) {
-        mOnItemClickListener = pOnItemClickListener;
-    }
-
-    @Override
-    public void onClick(View v) {
-        final Emotion tag = (Emotion) v.getTag();
-        if (mOnItemClickListener != null) {
-            mOnItemClickListener.onItemClick(tag);
-        }
     }
 
     @Override

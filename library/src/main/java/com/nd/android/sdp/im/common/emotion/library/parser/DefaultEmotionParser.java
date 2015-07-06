@@ -87,13 +87,13 @@ public class DefaultEmotionParser implements IEmotionParser {
                         emotionArrayList.add(emotion);
                         lastEmotion = emotion;
                     } else if (tagName.equalsIgnoreCase("def")) {
-                        lastEmotion.putLangText(Locale.ENGLISH.getLanguage(), xrp.nextText().trim());
+                        lastEmotion.putLangText(Locale.ENGLISH, xrp.nextText().trim());
                     } else if (tagName.equalsIgnoreCase("cn")) {
-                        lastEmotion.putLangText(Locale.CHINA.getLanguage(), xrp.nextText().trim());
+                        lastEmotion.putLangText(Locale.CHINA, xrp.nextText().trim());
                     } else if (tagName.equalsIgnoreCase("tw")) {
-                        lastEmotion.putLangText(Locale.TAIWAN.getLanguage(), xrp.nextText().trim());
+                        lastEmotion.putLangText(Locale.TAIWAN, xrp.nextText().trim());
                     } else if (tagName.equalsIgnoreCase("en")) {
-                        lastEmotion.putLangText(Locale.ENGLISH.getLanguage(), xrp.nextText().trim());
+                        lastEmotion.putLangText(Locale.ENGLISH, xrp.nextText().trim());
                     }
                 }
                 xrp.next();

@@ -56,7 +56,7 @@ public class Emotion implements Serializable {
      */
     private String mThumbExt;
 
-    private Map<String, String> mLangText = new HashMap<String, String>();
+    private Map<Locale, String> mLangText = new HashMap<Locale, String>();
 
     protected Emotion(IFileStragedy pFileStragedy, IEncoder pEncoder) {
         mFileStragedy = pFileStragedy;
@@ -202,7 +202,7 @@ public class Emotion implements Serializable {
      * @param lang
      * @param text
      */
-    public void putLangText(String lang, String text) {
+    public void putLangText(Locale lang, String text) {
         mLangText.put(lang, text);
     }
 
@@ -210,10 +210,10 @@ public class Emotion implements Serializable {
      * 获取语言文本
      * @param lang
      */
-    public String getLangText(String lang){
+    public String getLangText(Locale lang){
         String decode = mLangText.get(lang);
         if (TextUtils.isEmpty(decode)) {
-            decode = mLangText.get(Locale.ENGLISH.getLanguage());
+            decode = mLangText.get(Locale.ENGLISH);
         }
         return decode;
     }

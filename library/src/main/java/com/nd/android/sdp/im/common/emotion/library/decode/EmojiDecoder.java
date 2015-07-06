@@ -61,7 +61,7 @@ public class EmojiDecoder implements IDecoder {
             emotion = group.getEmotions().get(String.valueOf(unicode));
             int destLength = 0;
             if (emotion != null) {
-                final String string = "[" + emotion.getLangText(Locale.getDefault().getLanguage()) + "]";
+                final String string = "[" + emotion.getLangText(Locale.getDefault()) + "]";
                 destLength = string.length();
                 result.replace(i, i + skip, string);
             }

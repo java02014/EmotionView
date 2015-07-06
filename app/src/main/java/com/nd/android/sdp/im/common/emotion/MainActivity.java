@@ -77,6 +77,6 @@ public class MainActivity extends ActionBarActivity {
     }
 
     public void onDecodeNotification(View view) {
-        Log.e("TEST", EmotionManager.getInstance().decodeToText(this, "[sys:1001]"));
+        Log.e("TEST", EmotionManager.getInstance().decodeToText(this, "[sys:1012]"));
     }
 }

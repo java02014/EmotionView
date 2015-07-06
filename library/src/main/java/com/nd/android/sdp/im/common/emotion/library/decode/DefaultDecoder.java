@@ -63,7 +63,7 @@ public class DefaultDecoder implements IDecoder {
             }
             final Emotion emotion = groupEntity.getEmotions().get(id);
             if (emotion != null) {
-                result.replace(m.start(1), m.end(2), emotion.getLangText(Locale.getDefault().getLanguage()));
+                result.replace(m.start(1), m.end(2), emotion.getLangText(Locale.getDefault()));
             }else{
                 result.replace(m.start(1), m.end(2),pContext.getString(R.string.emotion_unknown));
             }

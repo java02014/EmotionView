@@ -1,0 +1,15 @@
+        {
+                Group group = new ${classname}(stragedyFactory.getFileStragedy());//className
+                group.setId("${groupid}");//groupid
+                group.setNormalImg("${normalimg}");//normalimg
+                group.setSelecteddImg("${selimg}");//selectedimg
+                group.setType(${type});//type
+                group.setExt("${ext}");//ext
+                group.setThumbExt("png");//thumb
+                group.setDirName("${dirname}");//dir
+                group.setOrder(${order});//order
+                ArrayList<Emotion> emotionArrayList = new ArrayList<Emotion>();
+                ${emotionsection}
+                group.setEmotionArrays(emotionArrayList.toArray(new Emotion[emotionArrayList.size()]));
+                groupList.add(group);
+        }

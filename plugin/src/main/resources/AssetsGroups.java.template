@@ -1,0 +1,37 @@
+package com.nd.android.sdp.im.common.emotion.library.getter;
+
+import com.nd.android.sdp.im.common.emotion.library.bean.EmojiGroup;
+import com.nd.android.sdp.im.common.emotion.library.bean.Emotion;
+import com.nd.android.sdp.im.common.emotion.library.bean.Group;
+import com.nd.android.sdp.im.common.emotion.library.bean.PicGroup;
+import com.nd.android.sdp.im.common.emotion.library.bean.TextPicGroup;
+import com.nd.android.sdp.im.common.emotion.library.parser.DefaultEmotionParser;
+import com.nd.android.sdp.im.common.emotion.library.parser.IEmotionParser;
+import com.nd.android.sdp.im.common.emotion.library.stragedy.IAssetsStragedyFactory;
+import com.nd.android.sdp.im.common.emotion.library.stragedy.configs.IConfigsStragedy;
+import com.nd.android.sdp.im.common.emotion.library.utils.EmotionTypeUtils;
+
+import java.util.ArrayList;
+import java.util.Locale;
+
+/**
+ * Created by Young on 15/7/7.
+ */
+public class AssetsGroups {
+
+    private static ArrayList<Group> sGroupList;
+
+    static{
+        ArrayList<Group> groupList = new ArrayList<Group>();
+        final IAssetsStragedyFactory stragedyFactory = EmotionManager.getInstance().getAssetsStragedyFactory();
+        IEmotionParser mEmotionParser = new DefaultEmotionParser(stragedyFactory.getFileStragedy());
+        IConfigsStragedy configsStragedy = stragedyFactory.getAssetsConfigs();
+        ${groupsection}
+        sGroupList = groupList;
+    }
+
+    public static ArrayList<Group> getAssetsGroups() {
+        return sGroupList;
+    }
+
+}

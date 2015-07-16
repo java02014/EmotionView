@@ -1,0 +1,15 @@
+
+        {
+            Emotion emotion = Emotion.create(stragedyFactory.getFileStragedy(), group.getClass());
+            emotion.setId("${emotionid}");//id
+            emotion.setFileName("${filename}");//filename
+            emotion.setGroupID(group.getId());//groupid
+            emotion.setGroupDirName("${dirname}");//groupdir
+            group.addEmotion("${emotionid}", emotion);//id
+            emotion.setExt(group.getExt());//groupext
+            emotion.setThumbExt("png");//thumbext
+            emotionArrayList.add(emotion);
+            emotion.putLangText(Locale.ENGLISH, "$en");//english
+            emotion.putLangText(Locale.CHINA, "$ch");//chinese
+            emotion.putLangText(Locale.TAIWAN, "$tw");//taiwan
+        }

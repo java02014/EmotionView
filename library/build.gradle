@@ -3,6 +3,12 @@ apply plugin: 'com.jfrog.bintray'
 
 android {
 
+    sourceSets {
+        main {
+            java.srcDirs 'src/main/java', 'build/generated/source/smiley/debug'
+        }
+    }
+
     compileSdkVersion 21
     buildToolsVersion "21.1.2"
 
@@ -42,9 +48,9 @@ afterEvaluate { project ->
         repositories {
             mavenDeployer {
                 repository(url: "http://nexus.sdp.nd/nexus/content/repositories/android-3rd/") {
-                    authentication(userName: mavenUser, password: mavenPassword)
+                    authentication(userName: mavenUser, password: mavenPass)
                 }
-                pom.version = "0.1.26"
+                pom.version = "0.1.28"
                 pom.artifactId = "emotion"
                 pom.groupId = "com.nd.android.sdp.im.common.widget"
             }
@@ -78,4 +84,22 @@ task androidJavadocs(type: Javadoc) {
     options.charSet = 'UTF-8'
     options.encoding = "UTF-8"
     source = android.sourceSets.main.java.source
+}
+
+buildscript {
+    repositories {
+        mavenCentral()
+        maven {
+            url uri('../repo')
+        }
+    }
+    dependencies {
+        classpath group: 'com.nd.sdp.gradle',
+                name: 'plugin',
+                version: '1.0-SNAPSHOT'
+    }
+}
+apply plugin: 'emotion-xml-plugin'
+
+task regenerateAssetsGroup(type: com.nd.sdp.gradle.GenerateEmotionClassTask) {
 }

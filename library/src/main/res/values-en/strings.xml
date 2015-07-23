@@ -1,0 +1,6 @@
+﻿<resources>
+    <string name="app_name">Library</string>
+    <string name="emotion_view_get_config_error">Emoticon configuration error.</string>
+    <string name="emotion_view_no_history">No history emoticon.</string>
+    <string name="emotion_unknown">Emoticon</string>
+</resources>

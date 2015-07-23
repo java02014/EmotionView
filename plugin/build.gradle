@@ -1,5 +1,6 @@
 apply plugin: 'java'
 apply plugin: 'groovy'
+apply plugin: 'com.jfrog.bintray'
 
 dependencies {
     compile gradleApi()
@@ -16,13 +17,24 @@ dependencies {
     testCompile 'junit:junit:4.11'
 }
 
-group = 'com.nd.sdp.gradle'
-version = '1.0-SNAPSHOT'
+group = 'com.young.android.emotion'
+version = '1.0.0'
 
-uploadArchives {
-    repositories {
-        mavenDeployer {
-            repository(url: uri('../repo'))
+bintray {
+    user = bintrayUser
+    key = bintrayApiKey
+
+    configurations = ['archives']
+    pkg {
+        repo = "maven"
+        name = "com.young.android.emotion"
+        websiteUrl = "https://github.com/eyyoung/EmotionView"
+        vcsUrl = "https://github.com/eyyoung/EmotionView.git"
+        issueTrackerUrl = 'https://github.com/eyyoung/EmotionView/issues'
+        licenses = ["Apache-2.0"]
+        publish = true
+        version {
+            name = '1.0.0' //Bintray logical version name
         }
     }
 }

@@ -3,11 +3,13 @@
 
     <FrameLayout
         android:background="#D7D7D7"
+        android:layout_weight="1"
         android:layout_height="wrap_content"
         android:layout_width="match_parent">
 
         <com.nd.android.sdp.im.common.emotion.library.view.WrapContentViewPager
             android:id="@+id/vpEmotion"
+            android:layout_gravity="center_vertical"
             android:layout_height="wrap_content"
             android:layout_width="match_parent"/>
 

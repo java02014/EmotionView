@@ -25,9 +25,6 @@ allprojects {
         maven {
             url 'http://nexus.sdp.nd/nexus/content/groups/android-public/'
         }
-        flatDir {
-            dirs "$rootProject.projectDir/libs"
-        }
     }
 
 }

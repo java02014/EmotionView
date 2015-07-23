@@ -67,4 +67,24 @@ public class EmotionEditText extends EditText implements IInputView, View.OnCrea
     public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
         mIsPaste = true;
     }
+
+    public interface OnKeyPreIme{
+        boolean onKeyPreIme(int keyCode, KeyEvent event);
+    }
+
+    private OnKeyPreIme mOnKeyPreIme;
+
+    public void setOnKeyPreIme(OnKeyPreIme onKeyPreIme){
+        mOnKeyPreIme = onKeyPreIme;
+    }
+
+    @Override
+    public boolean onKeyPreIme(int keyCode, KeyEvent event) {
+        if (mOnKeyPreIme != null) {
+            if (mOnKeyPreIme.onKeyPreIme(keyCode, event)) {
+                return true;
+            }
+        }
+        return super.onKeyPreIme(keyCode, event);
+    }
 }

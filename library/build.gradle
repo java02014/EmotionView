@@ -47,36 +47,44 @@ afterEvaluate { project ->
     uploadArchives {
         repositories {
             mavenDeployer {
-                repository(url: "http://nexus.sdp.nd/nexus/content/repositories/android-3rd/") {
-                    authentication(userName: mavenUser, password: mavenPass)
+                try {
+                    repository(url: "http://nexus.sdp.nd/nexus/content/repositories/android-3rd/") {
+                        authentication(userName: mavenUser, password: mavenPass)
+                    }
+                    pom.version = "0.1.29"
+                    pom.artifactId = "emotion"
+                    pom.groupId = "com.nd.android.sdp.im.common.widget"
+                } catch (ex) {
+                    throw new InvalidUserDataException("No Commit Privilege")
                 }
-                pom.version = "0.1.28"
-                pom.artifactId = "emotion"
-                pom.groupId = "com.nd.android.sdp.im.common.widget"
             }
         }
     }
 }
 
 group = 'com.young.android.EmotionView'
-version = '1.1.0'
+version = '1.2.0'
 
 bintray {
-    user = bintrayUser
-    key = bintrayApiKey
+    try {
+        user = bintrayUser
+        key = bintrayApiKey
 
-    configurations = ['archives']
-    pkg {
-        repo = "maven"
-        name = "com.young.android.EmotionView"
-        websiteUrl = "https://github.com/eyyoung/EmotionView"
-        vcsUrl = "https://github.com/eyyoung/EmotionView.git"
-        issueTrackerUrl = 'https://github.com/eyyoung/EmotionView/issues'
-        licenses = ["Apache-2.0"]
-        publish = true
-        version {
-            name = '1.0.0' //Bintray logical version name
+        configurations = ['archives']
+        pkg {
+            repo = "maven"
+            name = "com.young.android.EmotionView"
+            websiteUrl = "https://github.com/eyyoung/EmotionView"
+            vcsUrl = "https://github.com/eyyoung/EmotionView.git"
+            issueTrackerUrl = 'https://github.com/eyyoung/EmotionView/issues'
+            licenses = ["Apache-2.0"]
+            publish = true
+            version {
+                name = '1.2.0' //Bintray logical version name
+            }
         }
+    } catch (ex) {
+        throw new InvalidUserDataException("No Commit Privilege")
     }
 }
 
@@ -88,15 +96,14 @@ task androidJavadocs(type: Javadoc) {
 
 buildscript {
     repositories {
-        mavenCentral()
         maven {
-            url uri('../repo')
+            url "http://dl.bintray.com/eyyoung/maven"
         }
     }
     dependencies {
-        classpath group: 'com.nd.sdp.gradle',
+        classpath group: 'com.young.android.emotion',
                 name: 'plugin',
-                version: '1.0-SNAPSHOT'
+                version: '1.0.0'
     }
 }
 apply plugin: 'emotion-xml-plugin'

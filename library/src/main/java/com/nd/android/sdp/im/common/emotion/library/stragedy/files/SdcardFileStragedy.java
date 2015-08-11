@@ -30,4 +30,10 @@ public class SdcardFileStragedy implements IFileStragedy {
         File picFile = new File(mGroupDir, "/res(android)/" + pFileName + "." + pExt);
         return Uri.fromFile(picFile).toString();
     }
+
+    @Override
+    public long getFileSize(Context pContext, String pGroupName, String pFileName, String pExt) {
+        File picFile = new File(mGroupDir, "/res(android)/" + pFileName + "." + pExt);
+        return picFile.length();
+    }
 }

@@ -172,13 +172,12 @@ public abstract class Group implements IGroup {
     }
 
     @Override
-    public View getGridView(Context pContext, int pPosition, View.OnClickListener pOnClickListener) {
+    public View getGridView(Context pContext, int pPosition, int pWidth, View.OnClickListener pOnClickListener) {
         final LayoutInflater inflater = LayoutInflater.from(pContext);
         FrameLayout view = (FrameLayout) inflater.inflate(R.layout.pager_emotion, null);
         TableLayout tableLayout = (TableLayout) view.getChildAt(0);
         final int emotionCount = getEmotionCount(pPosition);
         final int row = (int) Math.ceil((float) emotionCount / (float) getColumn());
-        int screenWidht = pContext.getResources().getDisplayMetrics().widthPixels;
         for (int i = 0; i < row; i++) {
             TableRow tableRow = new TableRow(pContext);
             final int column = i < (row - 1) ? getColumn() : ((emotionCount - 1) % getColumn() + 1);
@@ -190,7 +189,7 @@ public abstract class Group implements IGroup {
                 inflate.setOnClickListener(pOnClickListener);
                 tableRow.addView(inflate);
                 final TableRow.LayoutParams layoutParams = (TableRow.LayoutParams) inflate.getLayoutParams();
-                layoutParams.width = screenWidht / getColumn();
+                layoutParams.width = pWidth / getColumn();
                 inflate.setLayoutParams(layoutParams);
                 inflate.setTag(emotion);
             }

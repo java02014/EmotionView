@@ -132,6 +132,10 @@ public class Emotion implements Serializable {
         return mFileStragedy.getImagePath(mGroupDirName, mFileName, mExt);
     }
 
+    public long getFileSize(Context pContext) {
+        return mFileStragedy.getFileSize(pContext, mGroupDirName, mFileName, mExt);
+    }
+
     public void setFileName(String pFileName) {
         mFileName = pFileName;
     }
@@ -208,9 +212,10 @@ public class Emotion implements Serializable {
 
     /**
      * 获取语言文本
+     *
      * @param lang
      */
-    public String getLangText(Locale lang){
+    public String getLangText(Locale lang) {
         String decode = mLangText.get(lang);
         if (TextUtils.isEmpty(decode)) {
             decode = mLangText.get(Locale.ENGLISH);

@@ -53,8 +53,9 @@ public interface IGroup {
      *
      * @param pContext  the p context
      * @param pPosition
+     * @param pWidth
      * @return the grid view
      */
-    View getGridView(Context pContext, int pPosition, View.OnClickListener pOnClickListener);
+    View getGridView(Context pContext, int pPosition, int pWidth, View.OnClickListener pOnClickListener);
 
 }

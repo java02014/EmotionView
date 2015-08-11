@@ -20,8 +20,7 @@ import com.nd.android.sdp.im.common.emotion.library.stragedy.AssetsStragedyFacto
 import com.nd.android.sdp.im.common.emotion.library.stragedy.IAssetsStragedyFactory;
 import com.nd.android.sdp.im.common.emotion.library.utils.EmotionImageLoader;
 import com.nd.android.sdp.im.common.emotion.library.utils.EmotionTypeUtils;
-import com.nostra13.universalimageloader.cache.disc.naming.Md5FileNameGenerator;
-import com.nostra13.universalimageloader.cache.memory.impl.WeakMemoryCache;
+import com.nostra13.universalimageloader.cache.memory.impl.LruMemoryCache;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.nostra13.universalimageloader.core.assist.QueueProcessingType;
 
@@ -95,10 +94,8 @@ public class EmotionManager {
         if (!EmotionImageLoader.getInstance().isInited()) {
             ImageLoaderConfiguration config = new ImageLoaderConfiguration
                     .Builder(pContext)
-                    .threadPriority(Thread.NORM_PRIORITY - 2)
                     .denyCacheImageMultipleSizesInMemory()
-                    .discCacheFileNameGenerator(new Md5FileNameGenerator())
-                    .memoryCache(new WeakMemoryCache())
+                    .memoryCache(new LruMemoryCache(10 * 1024 * 1024))
                     .tasksProcessingOrder(QueueProcessingType.LIFO).build();
             EmotionImageLoader.getInstance().init(config);
         }

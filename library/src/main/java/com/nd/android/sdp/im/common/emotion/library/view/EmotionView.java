@@ -19,6 +19,7 @@ import android.widget.Toast;
 import com.nd.android.sdp.im.common.emotion.library.EmotionManager;
 import com.nd.android.sdp.im.common.emotion.library.EmotionRecentsManager;
 import com.nd.android.sdp.im.common.emotion.library.IEmotionEvent;
+import com.nd.android.sdp.im.common.emotion.library.IEmotionEventV2;
 import com.nd.android.sdp.im.common.emotion.library.R;
 import com.nd.android.sdp.im.common.emotion.library.bean.Emotion;
 import com.nd.android.sdp.im.common.emotion.library.bean.Group;
@@ -53,6 +54,7 @@ public class EmotionView extends LinearLayout implements CompoundButton.OnChecke
     private LinearLayout mLlGroup;
     private Context mContext;
     private IEmotionEvent mEmotionEvent;
+    private IEmotionEventV2 mEmotionEventV2;
 
     private int mScreenWidth;
 
@@ -91,9 +93,55 @@ public class EmotionView extends LinearLayout implements CompoundButton.OnChecke
      * @param pInputView    输入输出控件
      * @author Young
      */
+    @Deprecated
     public void init(final int pEmotionTypes, IEmotionEvent pEmotionEvent, IInputView pInputView) {
+        init(pEmotionTypes, pEmotionEvent, pInputView, mScreenWidth);
+    }
+
+    /**
+     * 初始化操作
+     *
+     * @param pEmotionTypes 表情类型
+     * @param pEmotionEvent 表情事件
+     * @param pInputView    输入输出控件
+     * @param pWidth
+     * @author Young
+     */
+    @Deprecated
+    public void init(final int pEmotionTypes, IEmotionEvent pEmotionEvent, IInputView pInputView, final int pWidth) {
         mInputView = pInputView;
         mEmotionEvent = pEmotionEvent;
+        init(pEmotionTypes, pWidth);
+    }
+
+    /**
+     * 使用新版回调，选择图片可传回宽度高度，文件大小
+     *
+     * @param pEmotionTypes 支持表情类型
+     * @param pEmotionEvent 回调
+     * @param pInputView    输入 控件
+     * @author Young
+     */
+    public void init(final int pEmotionTypes, IEmotionEventV2 pEmotionEvent, IInputView pInputView) {
+        init(pEmotionTypes, pEmotionEvent, pInputView, mScreenWidth);
+    }
+
+    /**
+     * 使用新版回调，选择图片可传回宽度高度，文件大小
+     *
+     * @param pEmotionTypes 支持表情类型
+     * @param pEmotionEvent 回调
+     * @param pInputView    输入控件
+     * @param pWidth        控件宽度
+     * @author Young
+     */
+    public void init(final int pEmotionTypes, IEmotionEventV2 pEmotionEvent, IInputView pInputView, final int pWidth) {
+        mInputView = pInputView;
+        mEmotionEventV2 = pEmotionEvent;
+        init(pEmotionTypes, pWidth);
+    }
+
+    private void init(final int pEmotionTypes, final int pWidth) {
         mSubscription = Observable.create(new Observable.OnSubscribe<Object>() {
             @Override
             public void call(Subscriber<? super Object> pSubscriber) {
@@ -123,11 +171,11 @@ public class EmotionView extends LinearLayout implements CompoundButton.OnChecke
                             final Iterator<Group> iterator = mEmotionGroups.values().iterator();
                             defaultGroup = iterator.next();
                         }
-                        mVpEmotion.setAdapter(new EmotionPagerAdapter(mContext, defaultGroup, new OnEmotionClick()));
-                        // 获取到表情
-                        EmotionView.this.initGroupBtn();
+                        mVpEmotion.setAdapter(new EmotionPagerAdapter(mContext, defaultGroup, pWidth, new OnEmotionClick()));
+                        EmotionView.this.initGroupBtn(pWidth);
                         EmotionView.this.initDot();
                         EmotionView.this.setSelectGroupBtn(defaultGroup);
+                        // 获取到表情
                     }
                 }, new Action1<Throwable>() {
                     @Override
@@ -188,14 +236,16 @@ public class EmotionView extends LinearLayout implements CompoundButton.OnChecke
 
     /**
      * 初始化表情分组列表
+     *
+     * @param pWdith 宽度
      */
-    private void initGroupBtn() {
+    private void initGroupBtn(int pWdith) {
         int padding = mContext.getResources().getDimensionPixelSize(R.dimen.emotion_view_group_image_padding);
         final int size = mEmotionGroups.keySet().size();
         int groupWeightSum = size > GROUP_WEIGHT_SUM ? GROUP_WEIGHT_SUM : size;
         for (String id : mEmotionGroups.keySet()) {
             ImageView imageView = new ImageView(mContext);
-            LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(mScreenWidth / groupWeightSum, ViewGroup.LayoutParams.MATCH_PARENT);
+            LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(pWdith / groupWeightSum, ViewGroup.LayoutParams.MATCH_PARENT);
             imageView.setScaleType(ImageView.ScaleType.FIT_CENTER);
             imageView.setPadding(padding, padding, padding, padding);
             mLlGroup.addView(imageView, layoutParams);
@@ -225,7 +275,7 @@ public class EmotionView extends LinearLayout implements CompoundButton.OnChecke
         @Override
         public void onClick(View v) {
             final Group group = mEmotionGroups.get(v.getTag());
-            mVpEmotion.setAdapter(new EmotionPagerAdapter(mContext, group, new OnEmotionClick()));
+            mVpEmotion.setAdapter(new EmotionPagerAdapter(mContext, group, getWidth(), new OnEmotionClick()));
             EmotionView.this.initDot();
             final int childCount = mLlGroup.getChildCount();
             for (int i = 0; i < childCount; i++) {
@@ -259,7 +309,6 @@ public class EmotionView extends LinearLayout implements CompoundButton.OnChecke
     }
 
 
-
     @Override
     public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
 
@@ -282,6 +331,16 @@ public class EmotionView extends LinearLayout implements CompoundButton.OnChecke
             if ((emotion instanceof PicEmotion)) {
                 if (mEmotionEvent != null) {
                     mEmotionEvent.onEmotionSend(emotion.encode());
+                }
+                if (mEmotionEventV2 != null) {
+                    int width = 0;
+                    int height = 0;
+                    final Bitmap bitmap = EmotionImageLoader.getInstance().loadImageSync(emotion.getFileName());
+                    if (bitmap != null) {
+                        width = bitmap.getWidth();
+                        height = bitmap.getHeight();
+                    }
+                    mEmotionEventV2.onEmotionSend(emotion.encode(), width, height, emotion.getFileSize(mContext));
                 }
                 EmotionRecentsManager.getInstance(mContext).push(emotion);
             } else {

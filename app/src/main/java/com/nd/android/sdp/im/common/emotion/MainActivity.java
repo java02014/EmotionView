@@ -1,22 +1,22 @@
 package com.nd.android.sdp.im.common.emotion;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
 import com.nd.android.sdp.im.common.emotion.library.EmotionManager;
-import com.nd.android.sdp.im.common.emotion.library.IEmotionEvent;
+import com.nd.android.sdp.im.common.emotion.library.IEmotionEventV2;
 import com.nd.android.sdp.im.common.emotion.library.encode.EmojiEncoder;
 import com.nd.android.sdp.im.common.emotion.library.utils.EmotionTypeUtils;
 import com.nd.android.sdp.im.common.emotion.library.view.EmotionEditText;
 import com.nd.android.sdp.im.common.emotion.library.view.EmotionView;
 
 
-public class MainActivity extends ActionBarActivity {
+public class MainActivity extends Activity {
 
     private EmotionEditText mInputView;
 
@@ -24,14 +24,20 @@ public class MainActivity extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        EmotionView emotionView = (EmotionView) findViewById(R.id.vEmotion);
+        final EmotionView emotionView = (EmotionView) findViewById(R.id.vEmotion);
         mInputView = (EmotionEditText) findViewById(R.id.etInput);
-        emotionView.init(EmotionTypeUtils.ALL_TYPE, new IEmotionEvent() {
+        mInputView.post(new Runnable() {
             @Override
-            public void onEmotionSend(String emotionEncoded) {
-                Log.e("TEST", emotionEncoded);
+            public void run() {
+                emotionView.init(EmotionTypeUtils.ALL_TYPE, new IEmotionEventV2() {
+                    @Override
+                    public void onEmotionSend(String emotionEncoded, int width, int height, long size) {
+                        Log.e("TEST", emotionEncoded + " " + width + " " + height + " " + size);
+                    }
+
+                }, mInputView);
             }
-        }, mInputView);
+        });
     }
 
     @Override

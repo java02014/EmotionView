@@ -59,6 +59,7 @@ public class PicGroup extends Group {
             for (int j = 0; j < column; j++) {
                 final LinearLayout inflate = (LinearLayout) inflater.inflate(R.layout.emotion_view_item_pic_emotion, null);
                 final ImageView emotionView = (ImageView) inflate.getChildAt(0);
+                emotionView.setScaleType(ImageView.ScaleType.FIT_CENTER);
                 final Emotion emotion = getEmotion(pPosition, i * getColumn() + j);
                 EmotionImageLoader.getInstance().displayImage(emotion.getThumbFileName(), emotionView, sDisplayImageOptions);
                 inflate.setOnClickListener(pOnClickListener);

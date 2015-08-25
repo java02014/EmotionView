@@ -51,7 +51,7 @@ afterEvaluate { project ->
                     repository(url: "http://nexus.sdp.nd/nexus/content/repositories/android-3rd/") {
                         authentication(userName: mavenUser, password: mavenPass)
                     }
-                    pom.version = "0.1.35"
+                    pom.version = "1.0.0"
                     pom.artifactId = "emotion"
                     pom.groupId = "com.nd.android.sdp.im.common.widget"
                 } catch (ex) {

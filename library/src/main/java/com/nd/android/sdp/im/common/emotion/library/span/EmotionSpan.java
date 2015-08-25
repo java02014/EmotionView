@@ -81,6 +81,9 @@ public class EmotionSpan extends DynamicDrawableSpan {
     public void draw(Canvas canvas, CharSequence text, int start, int end, float x, int top, int y, int bottom, Paint paint) {
         //super.draw(canvas, text, start, end, x, top, y, bottom, paint);
         Drawable b = getCachedDrawable();
+        if (b == null) {
+            return;
+        }
         canvas.save();
 
         int transY = bottom - b.getBounds().bottom;
@@ -100,7 +103,7 @@ public class EmotionSpan extends DynamicDrawableSpan {
                 || (((BitmapDrawable) mDrawableRef.get()).getBitmap()) == null
                 || (((BitmapDrawable) mDrawableRef.get()).getBitmap()).isRecycled()) {
             mDrawable = null;
-            mDrawableRef = new WeakReference<Drawable>(getDrawable());
+            mDrawableRef = new WeakReference<>(getDrawable());
         }
         return mDrawableRef.get();
     }
